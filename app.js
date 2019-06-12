@@ -9,6 +9,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const User = require('./models/userModels');
 const cors = require('cors');
 const userRoutes = require('./routes/user');
+const loanRoutes = require('./routes/loan')
 
 mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?retryWrites=true", function(err) {
     if (err) {
@@ -40,7 +41,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use('/user',userRoutes);
-
+app.use('/loan',loanRoutes);
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;

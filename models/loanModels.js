@@ -2,29 +2,23 @@ const mongoose = require('mongoose');
 
 const loanSchema =new mongoose.Schema({
     recepient:{
-            id: {type: mongoose.Schema.Types.ObjectId,
-                required: true, ref:'Users'},
-            name: {type: String,
-                required: true, ref:'Users'},
-            wallet: {type : Number,
-            required: true, ref:'Users'}
+            _id: {type: mongoose.Schema.Types.ObjectId,
+                 ref:'Users'}
         },
     collablender: [{
-            id: {type: mongoose.Schema.Types.ObjectId,
-                required: true, ref: 'Users'},
-            name: {type: String,
-                required: true, ref: 'Users'},
-            wallet: {type : Number,
-                    required: true, ref:'Users'}                
+            _id: {type: mongoose.Schema.Types.ObjectId,
+                 ref: 'Users'}
+                 
         }],
     amtReq:{
         type: Number, required: true
     },
     amtSatisfied:{
-        type: Number, required: true
+        type: Number, default: 0
     },
-    dateReq:{type: Date},
-    dateDue: {type: Date}
+    dateRequested:{type: Date},
+    dateDue: {type: Date},
+    status:{type: String, default: 'pending'}
 })
 
 module.exports = mongoose.model('Loans', loanSchema);
