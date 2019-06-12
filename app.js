@@ -10,6 +10,8 @@ const User = require('./models/userModels');
 const cors = require('cors');
 const userRoutes = require('./routes/user');
 const loanRoutes = require('./routes/loan')
+const paymentRoutes = require('./routes/payment');
+
 
 mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?retryWrites=true", function(err) {
     if (err) {
@@ -21,11 +23,10 @@ mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?r
 
 
 
-const keyPublishable = process.env.stripePublicKey;
-const keySecret = process.env.stripeSecretKey;
+
 const port = 3000;
 const app = express();
-const stripe = require('stripe')(keySecret);
+
 
 app.set('view engine','ejs');
 app.use(require('express-session')({
@@ -42,7 +43,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use('/user',userRoutes);
 app.use('/loan',loanRoutes);
-
+app.use('/payment',paymentRoutes);
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
     next();

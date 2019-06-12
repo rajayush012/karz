@@ -1,0 +1,13 @@
+<form action="/payment/charge" method="POST">
+    <article>
+        <label>Amount:</label>
+        <input type="number" name="amt">
+    </article>
+    <script src="https://checkout.stripe.com/checkout.js"
+    class="stripe-button"
+    data-key="<%=keyPublishable%>"
+    data-locale="auto"
+    data-description="Recharge"
+    data-amount=""></script>
+
+</form>
