@@ -2,12 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-
+require('dotenv').config();
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-
+const User = require('./models/userModels');
 const cors = require('cors');
+const userRoutes = require('./routes/user');
+
 mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?retryWrites=true", function(err) {
     if (err) {
         console.log("Database Not Connected", err);
@@ -16,8 +18,13 @@ mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?r
     }
 });
 
+
+
+const keyPublishable = process.env.stripePublicKey;
+const keySecret = process.env.stripeSecretKey;
 const port = 3000;
 const app = express();
+const stripe = require('stripe')(keySecret);
 
 app.set('view engine','ejs');
 app.use(require('express-session')({
@@ -29,9 +36,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname+'/public'));
-// passport.use(new localStrategy(Author.authenticate()));
-// passport.serializeUser(Author.serializeUser());
-// passport.deserializeUser(Author.deserializeUser());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use('/user',userRoutes);
+
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
