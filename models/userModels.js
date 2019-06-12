@@ -11,6 +11,7 @@ const userSchema =new mongoose.Schema({
     wallet: {type: Number, default: 100},
     
 })
+userSchema.plugin(passportLocalMongoose);
 
 userSchema.plugin(passportLocalMongoose);
 
