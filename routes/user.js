@@ -28,7 +28,7 @@ router.get('/dashboard',isLoggedIn,(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.render('dashboard',{user:user});
+            res.render('user/dashboard',{user:user});
         }
     })
 })
@@ -45,12 +45,17 @@ router.post('/login',passport.authenticate("local",{
     
 });
 
+router.get('/logout',(req,res)=>{
+    req.logOut();
+    res.redirect('/');
+})
+
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());
      if(req.isAuthenticated()){
          return next();
      }
-     res.redirect('/');
+     res.redirect('/user/login');
  }
  
 
