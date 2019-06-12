@@ -9,5 +9,6 @@ const userSchema =new mongoose.Schema({
     wallet: {type: Number, default: 0},
     
 })
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Users', userSchema);
