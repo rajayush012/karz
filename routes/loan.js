@@ -93,6 +93,7 @@ router.post('/:loanid/bid', (req, res) => {
                                         console.log(user);
                                     } else {
                                         user.wallet += loan.amtReq;
+                                        user.save();
                                     }
 
                                 });
