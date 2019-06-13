@@ -29,7 +29,7 @@ router.post("/new", isLoggedIn, (req, res) => {
         recepient: req.user._id,
         amtReq: req.body.amount,
         dateRequested: Date.now(),
-        dateDue: req.body.date*30,
+        dateDue: req.body.date,
         dateRemaining: req.body.date,
     }, (err, loan) => {
         if (err) {
@@ -131,7 +131,7 @@ function isLoggedIn(req, res, next) {
     res.redirect('/user/login');
 }
 
-var dayDuration = 20000;
+var dayDuration = 5000;
 
 var interTimer = setInterval(() => {
     Loan.find({ status: 'pending' }, (err, loans) => {
@@ -160,6 +160,8 @@ var interTimer = setInterval(() => {
    
 }, dayDuration);
 
+const interestRate = 0.12;
+
 var installTimer = setInterval(() => {
     Loan.find({ status: 'accepted' }, (err, loans) => {
         if (err) {
@@ -177,9 +179,17 @@ var installTimer = setInterval(() => {
                                 console.log(err);
                             }else{
                                //logic for wallet deduction
-
+                               (async ()=>{
+                                user.wallet -= ((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue;
+                               })();
+                                user.save();
                                //logic for distribution of interest money to contributors
-                               
+                               loan.collablender.forEach(payee=>{
+                                   User.findById(payee._id, (err,paye)=>{
+                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq);
+                                    paye.save();
+                                   });
+                               })
                             }
                         })
                     })();
