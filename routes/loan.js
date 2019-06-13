@@ -172,24 +172,35 @@ var installTimer = setInterval(() => {
                 loans.forEach(loan=>{
                     if(loan.dateRemaining%30===0){
                         //payment
-                        console.log(loan._id ,'-',loan.dateRemaining);
+                        //console.log(loan._id ,'-',loan.dateRemaining);
                         if(loan.dateRemaining<=0){
                             loan.status = 'paid';
                         }
-                        User.findById(loan.recepient._id,(err,user)=>{
-                            user.wallet -= ((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue;
+                        User.findById(loan.recepient._id,(err,user)=>{       
+                        user.wallet -= parseFloat(((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue);
+                        if(user.wallet>=0){
                             user.save();
-                        })
-
-                        loan.collablender.forEach(payee=>{
-                            User.findById(payee._id,(err,paye)=>{
-                                paye.wallet += (((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
-                                paye.save();
+                            loan.collablender.forEach(payee=>{
+                                User.findById(payee._id,(err,paye)=>{
+                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
+                                    paye.save();
+                                })
+    
                             })
 
+                        }else{
+                            loan.status = 'default';
+                            loan.save();
+                        }
+
                         })
 
+                 
 
+
+                    }
+                    if(loan.status === 'default'){
+                        return;
                     }
                     loan.dateRemaining=loan.dateRemaining-1;
                     loan.save();
@@ -206,6 +217,19 @@ var installTimer = setInterval(() => {
    
 }, dayDuration);
 
+
+var defaultTimer = setInterval(()=>{
+    Loan.find({status: 'default'},(err,loans)=>{
+        loans.forEach(loan=>{
+            User.findById(loan.recepient._id,(err,user)=>{
+
+                
+
+
+            })
+        })
+    })
+},dayDuration)
 
 
 
