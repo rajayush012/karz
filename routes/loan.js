@@ -149,10 +149,7 @@ var interTimer = setInterval(() => {
 
                     loan.save();
                 })
-            } else {
-                clearInterval(interTimer);
-            }
-
+            } 
         }
 
     });
@@ -190,7 +187,6 @@ var installTimer = setInterval(() => {
 
                         }else{
                             loan.status = 'default';
-                            loan.save();
                         }
 
                         })
@@ -199,17 +195,14 @@ var installTimer = setInterval(() => {
 
 
                     }
-                    if(loan.status === 'default'){
-                        return;
+                    if(loan.status !== 'default'){
+                        loan.dateRemaining=loan.dateRemaining-1;
                     }
-                    loan.dateRemaining=loan.dateRemaining-1;
+                    
                     loan.save();
                 })
 
-            } else {
-                clearInterval(installTimer);
-            }
-
+            } 
         }
 
     });
@@ -221,6 +214,7 @@ var installTimer = setInterval(() => {
 var defaultTimer = setInterval(()=>{
     Loan.find({status: 'default'},(err,loans)=>{
         loans.forEach(loan=>{
+            console.log('hello');
             User.findById(loan.recepient._id,(err,user)=>{
                 const sgMail = require('@sendgrid/mail');
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
