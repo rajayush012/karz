@@ -1,0 +1,20 @@
+<h1>Bid</h1>
+
+Loan id - <%= loan._id %>
+<br>
+Loan amount - <%= loan.amtReq %>
+<br>
+Loan amount satisfied - <%= loan.amtSatisfied %>
+<br>
+<br>
+
+Loam amount Remaining - <%= loan.amtReq - loan.amtSatisfied %>
+<br>
+
+<form action="/loan/<%= loan._id %>/bid" method="POST">
+    <label>Amount you want to contribute (<= <%= loan.amtReq - loan.amtSatisfied %>)</label>
+    <input type="number" name="amount">
+    <br>
+
+    <input type="submit">
+</form>

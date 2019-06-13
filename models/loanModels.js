@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 
 const loanSchema =new mongoose.Schema({
     recepient:{
-            _id: {type: mongoose.Schema.Types.ObjectId,
-                 ref:'Users'}
-        },
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     collablender: [{
             _id: {type: mongoose.Schema.Types.ObjectId,
-                 ref: 'Users'}
+                 ref: 'User'},
+            amtcontrib: {type: Number}
                  
         }],
     amtReq:{

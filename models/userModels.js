@@ -9,6 +9,7 @@ const userSchema =new mongoose.Schema({
     pendingLoans:{type: Number, default: 0},
     loanreq:[{type: mongoose.Schema.Types.ObjectId}],
     wallet: {type: Number, default: 100},
+    isAdmin: {type: String, default: 'No'}
     
 })
 userSchema.plugin(passportLocalMongoose);

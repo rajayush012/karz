@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const mongoose = require('mongoose');
-const User = require('../models/loanModels');
+const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels')
 
@@ -11,7 +11,11 @@ router.get('/showall',isLoggedIn,(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.render('loan/all',{loans:loans});
+            var filterLoans = loans.filter(loan=>{
+                
+                return (!loan.recepient.equals(req.user._id));
+            })
+            res.render('loan/all',{loans:filterLoans});
         }
     });
 });
@@ -31,7 +35,19 @@ router.post("/new",isLoggedIn,(req,res)=>{
             console.log(err);
             res.redirect('/loan/new');
         }else{
-            res.redirect(`loan/${loan._id}`);
+            User.findById(req.user._id,(err,user)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    user.loanreq.push(loan._id);
+                    user.save();
+                    res.redirect(`/loan/${loan._id}`);
+                }
+                
+            })
+
+
+           
         }
         
     })
@@ -43,7 +59,20 @@ router.get('/:loanid',isLoggedIn,(req,res)=>{
     })
 })
 
+router.get('/:loanid/bid',isLoggedIn,(req,res)=>{
+    Loan.findById(req.params.loanid,(err,loan)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.render('loan/bid',{loan});
+        }
+    });
+   
+});
 
+router.post('/:loanid/bid',(req,res)=>{
+    res.render('loan/bidsuccess');
+})
 
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());
