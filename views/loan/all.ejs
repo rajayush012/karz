@@ -3,7 +3,7 @@
 <ul>
     <% loans.forEach(loan=>{ %>
         <li>
-            <a href="/loan/<%= loan._id %>" > <%= loan._id %></a> | Amount Requested ---> <%= loan.amtReq %> | Amount satified ---> <%= loan.amtSatisfied %> | Due date ---> <%= loan.dateDue %> | <a href="/loan/<%= loan.id %>/bid">help</a>
+            <a href="/loan/<%= loan._id %>" > <%= loan._id %></a> | Amount Requested ---> <%= loan.amtReq %> | Amount satified ---> <%= loan.amtSatisfied %> | Due date ---> <%= loan.dateDue %>| <%=loan.timeForBid %> | <a href="/loan/<%= loan.id %>/bid">help</a>
         </li>
     <% }) %>
 </ul>
