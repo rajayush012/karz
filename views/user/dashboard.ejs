@@ -8,3 +8,11 @@ current wallet = <%= user.wallet %>
 <a href="/loan/new">New Loan</a>
 <br>
 <a href="/loan/showall">All loans</a>
+
+<hr>
+
+<h2>Transfer to account</h2>
+<form action="/user/flush/<%=user._id %>" method="POST">
+    <input type="number" name="trans">
+    <input type="submit" value="Transfer">
+</form>

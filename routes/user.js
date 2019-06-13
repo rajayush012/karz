@@ -8,6 +8,17 @@ router.get('/new',(req,res)=>{
     res.render('user/newuser')
 });
 
+
+router.post('/flush/:id',(req,res)=>{
+    User.findById(req.params.id, (err,user)=>{
+        user.wallet -= req.body.trans;
+        if(user.wallet >= 0)
+            user.save();
+    })
+    res.redirect('/user/dashboard');
+})
+
+
 router.post('/new',(req,res)=>{
    
     var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email});
