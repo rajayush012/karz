@@ -10,7 +10,7 @@ router.get('/new',(req,res)=>{
 
 router.post('/new',(req,res)=>{
    
-    var newUser = new User({username: req.body.username, name: req.body.name});
+    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email});
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
             console.log(err);
