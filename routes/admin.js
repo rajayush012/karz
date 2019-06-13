@@ -3,7 +3,7 @@ const router  = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
-const Admin = require()
+const Admin = require('../models/adminModel');
 
 router.get('/new',(req,res)=>{
     res.render('admin/newadmin')
@@ -28,6 +28,7 @@ router.post('/newAdmin',(req,res)=>{
 
 
 
+
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());
      if(req.isAuthenticated()){
@@ -36,5 +37,7 @@ function isLoggedIn(req,res,next){
      res.redirect('/login');
  }
  
+
+
 
 module.exports = router;
