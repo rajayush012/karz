@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
+const formidable= require('formidable');
 
 router.get('/new',(req,res)=>{
     res.render('user/newuser')
@@ -86,6 +87,29 @@ router.get('/logout',(req,res)=>{
     req.logOut();
     res.redirect('/');
 })
+
+router.get('/kyc', (req,res)=>{
+    res.render('user/kyc');
+})
+router.post('/submit-form', (req, res) => {
+    new formidable.IncomingForm().parse(req)
+      .on('field', (name, panImage) => {
+        console.log('Field', name, panImage)
+      })
+      .on('file', (name, file) => {
+        console.log('Uploaded file', name, file)
+      })
+      .on('aborted', () => {
+        console.error('Request aborted by the user')
+      })
+      .on('error', (err) => {
+        console.error('Error', err)
+        throw err
+      })
+      .on('end', () => {
+        res.end()
+      })
+  })
 
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());
