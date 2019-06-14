@@ -10,21 +10,37 @@ router.get('/new',(req,res)=>{
 });
 
 router.post('/new',(req,res)=>{   
-    var newUser = new User({username: req.body.username, name: req.body.name, isAdmin: 'Yes'});
+    var newUser = new User({username: req.body.username, name: req.body.name, isAdmin: 'yes'});
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
             console.log(err);
             res.redirect('/')
         }
         passport.authenticate("local")(req,res, ()=>{
-        res.render(`admin/continue`);
+        res.redirect(`admin/adminHome`);
         })
     } );
 
-})
-router.post('/newAdmin',(req,res)=>{
-    Admin.create
-})
+});
+
+router.post('/login',passport.authenticate("local",{
+    successRedirect: "/admin/dashboard",
+    failureRedirect: "/admin/login"
+}),(req,res)=>{
+    
+});
+
+router.get('/login',)
+
+
+
+function isAdminAndLoggedIn(){
+    if(req.isAuthenticated()){
+       
+        return next();
+    }
+    res.redirect('/user/login');
+}
 
 
 
