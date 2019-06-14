@@ -1,4 +1,4 @@
-<form action="/user/new" method="POST">
+<form action="/user/new" method="POST" enctype="multipart/form-data">
     <label>Name</label>
     <input type="text" name="name">
     <br>
@@ -8,7 +8,10 @@
     <br>
     <label >Email</label>
     <input type="email" name="email">
-    
+    <br>
+    <label>Profile pic</label>
+    <input type="file" name="file">
+    <br>
     <label>Password</label>
     <input type="text" name="password">
     <br>
