@@ -96,12 +96,14 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
+                    <span class="d-lg-none d-md-block">Settings</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   
                   <a class="dropdown-item" href="/user/profile">Signed in as <%= user.username%></a>
+                  <%if(user.kyc === undefined ){%>
+                  <a class="dropdown-item" href="/user/kyc">Upload KYC</a> <%}%>
                   <a class="dropdown-item" href="/user/logout">Logout</a>
                 </div>
               </li>
@@ -236,7 +238,12 @@
                   <h5 class="card-title text-danger text-center">Apply for a new Loan</h5>
                 </div>
                 <div class="card-body ">
+                <% if(user.kycstatus === 'approved'){%>
                 <a class="btn btn-large btn-success btn-block" href="/loan/new" >Apply here!</a>
+                <% }else{ %>
+                  <a class="btn btn-large disabled btn-success btn-block" href="#" >Apply here!</a>
+                  <p class="text-danger">You can't apply for a loan until your KYC is approved</p>
+                  <% } %>
                   </ul>
                 </div>
                 

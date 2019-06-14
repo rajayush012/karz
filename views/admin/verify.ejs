@@ -114,7 +114,7 @@
                             <div class="card-header text-center">
                                 <h5 class="card-title text-danger text-center">Name</h5>
                             </div>
-                            <div class="card-body ">                         
+                            <div class="card-body text-center">                         
                              <p><%= verifye.name%></p>                  
                             </div>
 
@@ -129,7 +129,7 @@
                             <div class="card-header text-center">
                                 <h5 class="card-title text-danger text-center">Username</h5>
                             </div>
-                            <div class="card-body ">
+                            <div class="card-body text-center">
                                     <p><%= verifye.username%></p>   
                             </div>
 
@@ -144,7 +144,7 @@
                                 <div class="card-header text-center">
                                         <h5 class="card-title text-danger text-center">Email</h5>
                                     </div>
-                            <div class="card-body ">
+                            <div class="card-body text-center">
                                     <p><%= verifye.email%></p>   
                             </div>
 
@@ -159,8 +159,8 @@
                             <div class="card-header text-center">
                                 <h5 class="card-title text-danger text-center">Aadhar No.</h5>
                             </div>
-                            <div class="card-body ">
-                                    <p><%= verifye.aadharno%></p>   
+                            <div class="card-body text-center">
+                                    <p><%= kyc.adhaarno%></p>   
                             </div>
 
                         </div>
@@ -174,8 +174,8 @@
                             <div class="card-header text-center">
                                 <h5 class="card-title text-danger text-center">Adhaar Image</h5>
                             </div>
-                            <div class="card-body ">
-                                    <img src="<%=verifye.aadharImage.substring(6)%>" alt="">   
+                            <div class="card-body text-center">
+                                    <img src="<%=kyc.adhaarImage.substring(6)%>" alt="">   
                             </div>
 
                         </div>
@@ -188,8 +188,8 @@
                                 <div class="card-header text-center">
                                     <h5 class="card-title text-danger text-center">PAN No.</h5>
                                 </div>
-                                <div class="card-body ">
-                                        <p>Name - <%= verifye.panno%></p>   
+                                <div class="card-body text-center">
+                                        <p>Name - <%= kyc.panno%></p>   
                                 </div>
     
                             </div>
@@ -202,8 +202,8 @@
                                     <div class="card-header text-center">
                                         <h5 class="card-title text-danger text-center">PAN Image</h5>
                                     </div>
-                                    <div class="card-body ">
-                                            <img src="<%=verify.panImage.substring(6)%>" alt="">
+                                    <div class="card-body text-center">
+                                            <img src="<%=kyc.panImage.substring(6)%>" alt="">
                                     </div>
         
                                 </div>
@@ -217,8 +217,8 @@
                                 <div class="card-header text-center">
                                     <h5 class="card-title text-danger text-center">Salary</h5>
                                 </div>
-                                <div class="card-body ">
-                                        <p>Salary - <%= verifye.salary%></p>   
+                                <div class="card-body text-center">
+                                        <p>Salary - <%= kyc.salary%></p>   
                                 </div>
     
                             </div>
@@ -231,8 +231,8 @@
                                     <div class="card-header text-center">
                                         <h5 class="card-title text-danger text-center">Salary Image</h5>
                                     </div>
-                                    <div class="card-body ">
-                                            <img src="<%=verifye.salarySlip.substring(6)%>" alt="">   
+                                    <div class="card-body text-center">
+                                            <img src="<%=kyc.salarySlip.substring(6)%>" alt="">   
                                     </div>
         
                                 </div>
@@ -246,8 +246,8 @@
                             <div class="card-header text-center">
                                 <h5 class="card-title text-danger text-center">LinkedIn profile</h5>
                             </div>
-                            <div class="card-body ">
-                                    <p><%=verifye.profile%></p> 
+                            <div class="card-body text-center">
+                                    <p><%=kyc.profile%></p> 
                             </div>
 
                         </div>
@@ -259,8 +259,8 @@
                         <div class="col-md-12">
                             <div class="card ">
                                
-                                <form action="/admin/verify/<%=verify._id%>" method="POST"> 
-                                    <input class="btn btn-danger" type="submit" value="Verify">
+                                <form action="/admin/verify/<%=verifye._id%>" method="POST"> 
+                                    <input class="btn btn-block btn-danger" type="submit" value="Verify">
                                 </form>
                                 <a class="btn btn-dark" href="/admin/dashboard">Go back</a>
                             </div>
