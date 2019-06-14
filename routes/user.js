@@ -4,6 +4,25 @@ const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
+const multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: 'public/userAssets/uploads/',
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now()+ '.jpg')
+    }
+})
+
+var storageKyc = multer.diskStorage({
+    destination: 'public/userAssets/uploads/kyc',
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now()+ '.jpg')
+    }
+})
+var upload = multer({ storage: storage })
+
+var uploadKyc = multer({ storage: storageKyc })
+
 
 router.get('/new',(req,res)=>{
     res.render('user/newuser')
@@ -19,10 +38,9 @@ router.post('/flush/:id',(req,res)=>{
     res.redirect('/user/dashboard');
 })
 
-
-router.post('/new',(req,res)=>{
-   
-    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email});
+router.post('/new',upload.single('file'),(req,res)=>{
+   console.log(req.file);
+    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email,profilePic: req.file.path});
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
             console.log(err);
@@ -36,11 +54,12 @@ router.post('/new',(req,res)=>{
 })
 
 router.get('/dashboard',isLoggedIn,(req,res)=>{
+    
     User.findById(req.user._id,(err,user)=>{
         if(err){
             console.log(err);
         }else{
-
+           // console.log(user.profilePic.substring(6));
             Loan.find({recepient: req.user._id, status: 'pending'},(err,pendingLoans)=>{
                 console.log(pendingLoans);
                 if(err){
