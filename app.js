@@ -29,7 +29,7 @@ mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?r
 const port = 3000;
 const app = express();
 
-
+app.use(express.static(__dirname+'/public/'));
 app.set('view engine','ejs');
 app.use(require('express-session')({
     secret: "Old Monks",

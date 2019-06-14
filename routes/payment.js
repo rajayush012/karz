@@ -9,7 +9,10 @@ const keySecret = process.env.SECRET_KEY;
 const stripe = require("stripe")(keySecret);
 
 router.get('/charge', isLoggedIn,(req,res)=>{
-    res.render('payments/recharge',{keyPublishable});
+  User.findById(req.user._id,(err,user)=>{
+    res.render('payments/recharge',{keyPublishable,user});
+  })
+    
 })
 
 router.post("/charge",isLoggedIn, (req, res) => {

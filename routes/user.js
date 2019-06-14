@@ -3,6 +3,7 @@ const router  = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
+const Loan = require('../models/loanModels');
 
 router.get('/new',(req,res)=>{
     res.render('user/newuser')
@@ -39,7 +40,32 @@ router.get('/dashboard',isLoggedIn,(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.render('user/dashboard',{user:user});
+
+            Loan.find({recepient: req.user._id, status: 'pending'},(err,pendingLoans)=>{
+                console.log(pendingLoans);
+                if(err){
+                    console.log(err);
+                }else{
+                    Loan.find({recepient: req.user._id, status: 'accepted'},(err,acceptedLoans)=>{
+
+                        if(err){
+                            console.log(err);
+                        }else{
+                            Loan.find({"collablender._id": req.user._id},(err,collabLoans)=>{
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    res.render('user/dashboard/dashboard',{user:user, collabLoans:collabLoans , acceptedLoans:acceptedLoans , pendingLoans:pendingLoans});
+                                }
+                            })
+                        }
+
+                    })
+                }
+
+            })
+
+          //  res.render('user/dashboard/dashboard',{user:user});
         }
     })
 })

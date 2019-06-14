@@ -15,7 +15,15 @@ router.get('/showall', isLoggedIn, (req, res) => {
 
                 return (!loan.recepient.equals(req.user._id));
             })
-            res.render('loan/all', { loans: filterLoans });
+
+            User.findById(req.user._id,(err,user)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render('loan/all', { loans: filterLoans ,user:user});
+                }
+            })
+            
         }
     });
 });
@@ -63,7 +71,11 @@ router.get('/:loanid/bid', isLoggedIn, (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render('loan/bid', { loan });
+           
+            User.findById(req.user._id,(err,user)=>{
+                res.render('loan/bid', { loan:loan ,user:user});
+            })
+           
         }
     });
 
