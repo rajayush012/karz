@@ -5,6 +5,7 @@ const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
 const multer = require('multer');
+const KYC=require('../models/kycModels')
 
 var storage = multer.diskStorage({
     destination: 'public/userAssets/uploads/',
@@ -29,6 +30,8 @@ router.get('/new',(req,res)=>{
 });
 
 
+
+
 router.post('/flush/:id',(req,res)=>{
     User.findById(req.params.id, (err,user)=>{
         user.wallet -= req.body.trans;
@@ -39,7 +42,7 @@ router.post('/flush/:id',(req,res)=>{
 })
 
 router.post('/new',upload.single('file'),(req,res)=>{
-   console.log(req.file);
+  // console.log(req.file);
     var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email,profilePic: req.file.path});
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
@@ -53,6 +56,35 @@ router.post('/new',upload.single('file'),(req,res)=>{
 
 })
 
+router.get ('/kyc',isLoggedIn,(req,res)=>{
+    res.render('user/kyc');
+})
+
+router.post('/kyc',isLoggedIn,uploadKyc.fields([
+    { name:'adhaarImage' ,maxCount:1 },
+    { name:'panImage' ,maxCount:1 },
+    { name:'salarySlip' ,maxCount:1 }
+]),(req,res)=>{
+    KYC.create({
+        adhaarno:req.body.adhaarno,
+        panno: req.body.panno,
+        salary: req.body.salary,
+        profile: req.body.profile,
+        adhaarImage: req.files.adhaarImage.path,
+        panImage: req.files.panImage.path,
+        salarySlip: req.files.salarySlip.path
+    },(err,kyc)=>{
+
+        User.findById(req.user._id,(err,user)=>{
+            user.kyc=kyc._id;
+            user.save();
+            res.redirect('/user/dashboard');
+        })        
+        
+    })
+});
+
+
 router.get('/dashboard',isLoggedIn,(req,res)=>{
     
     User.findById(req.user._id,(err,user)=>{
@@ -61,7 +93,7 @@ router.get('/dashboard',isLoggedIn,(req,res)=>{
         }else{
            // console.log(user.profilePic.substring(6));
             Loan.find({recepient: req.user._id, status: 'pending'},(err,pendingLoans)=>{
-                console.log(pendingLoans);
+               // console.log(pendingLoans);
                 if(err){
                     console.log(err);
                 }else{

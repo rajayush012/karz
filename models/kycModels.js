@@ -13,7 +13,8 @@ panno:{type: String, required:true},
 panImage: {type:String, required: true},
 salary: {type:Number, required: true},
 salarySlip:{type:String, required: true},
-profile:{type:String}
+profile:{type:String},
+status: {type:String, default:"unchecked"}
 })
 
 module.exports = mongoose.model('KYC', kycSchema);
