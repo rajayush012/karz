@@ -11,7 +11,8 @@ const userSchema =new mongoose.Schema({
     wallet: {type: Number, default: 100},
     isAdmin: {type: String, default: 'no'},
     kyc:{type:mongoose.Schema.Types.ObjectId, ref: 'KYC'},
-    profilePic:{type: String}
+    profilePic:{type: String},
+    kycstatus: {type:String, default:'not verified'}
 })
 userSchema.plugin(passportLocalMongoose);
 

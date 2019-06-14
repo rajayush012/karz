@@ -17,7 +17,7 @@ router.post('/new',(req,res)=>{
             res.redirect('/')
         }
         passport.authenticate("local")(req,res, ()=>{
-        res.redirect(`admin/adminHome`);
+        res.redirect(`admin/dashboard`);
         })
     } );
 
@@ -30,16 +30,44 @@ router.post('/login',passport.authenticate("local",{
     
 });
 
-router.get('/login',)
+router.get('/login',(req,res)=>{
+    res.render('admin/login');
+});
 
 
+router.get('/dashboard',isAdminAndLoggedIn,(req,res)=>{
+    User.find({},(err,users)=>{
+        filteredUsers = users.filter(user=>{
+            return (!user._id.equals(req.user._id))&&(user.isAdmin==='no');
+        })
+        User.findById(req.user._id,(err,user)=>{
+            res.render('admin/adminHome',{users: filteredUsers,user:user});
+        })
+        
+    })
+    
+})
 
-function isAdminAndLoggedIn(){
+router.get('/verify/:userid',isAdminAndLoggedIn,(req,res)=>{
+    User.findById(req.user._id,(err,user)=>{
+        User.findById(req.params.userid,(err,veri)=>{
+            res.render('admin/verify',{user:user,verifye:veri});
+        })
+        
+    })
+    
+})
+
+function isAdminAndLoggedIn(req,res,next){
     if(req.isAuthenticated()){
-       
+       if(req.user.isAdmin === 'yes'){
         return next();
+       }
+        else{
+            res.redirect('/admin/login');
+        }
     }
-    res.redirect('/user/login');
+    res.redirect('/admin/login');
 }
 
 
