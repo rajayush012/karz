@@ -274,16 +274,12 @@ background: linear-gradient(to right, #111111, #111111); /* W3C, IE 10+/ Edge, F
                   <h5 class="card-title text-center">Apply for a new Loan</h5>
                 </div>
                 <div class="card-body ">
-<<<<<<< HEAD
-                <a class="btn btn-large btn-danger btn-block" href="/loan/new" >Apply here!</a>
-=======
                 <% if(user.kycstatus === 'approved'){%>
                 <a class="btn btn-large btn-success btn-block" href="/loan/new" >Apply here!</a>
                 <% }else{ %>
                   <a class="btn btn-large disabled btn-success btn-block" href="#" >Apply here!</a>
                   <p class="text-danger">You can't apply for a loan until your KYC is approved</p>
                   <% } %>
->>>>>>> 3c51a3be9569cd89455e1909d0c8f1c5fd45b898
                   </ul>
                 </div>
                 
