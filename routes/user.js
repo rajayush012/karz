@@ -74,7 +74,7 @@ router.post('/flush/:id',(req,res)=>{
 
 router.get('/new',(req,res)=>{
     message ="";
-    res.render('user/newuser',{message});
+    res.render('user/signup',{message});
 });
 
 
