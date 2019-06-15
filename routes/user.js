@@ -4,9 +4,6 @@ const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
-<<<<<<< HEAD
-const formidable= require('formidable');
-=======
 const multer = require('multer');
 const KYC=require('../models/kycModels')
 
@@ -27,7 +24,6 @@ var upload = multer({ storage: storage })
 
 var uploadKyc = multer({ storage: storageKyc })
 
->>>>>>> c2196625cdfdc1774be79e5902fa9b3fcda4a2fd
 
 router.get('/new',(req,res)=>{
     res.render('user/newuser')
