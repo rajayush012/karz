@@ -43,6 +43,7 @@ router.post("/new", isLoggedIn, (req, res) => {
     Loan.create({
         recepient: req.user._id,
         amtReq: req.body.amount,
+        interest: req.body.interest,
         dateRequested: Date.now(),
         dateDue: req.body.date*30,
         dateRemaining: req.body.date*30,
@@ -123,6 +124,19 @@ router.post('/:loanid/bid', (req, res) => {
                                         console.log(user);
                                     } else {
                                         user.wallet += loan.amtReq;
+                                        loan.collablender.forEach(lender=>{
+                                            User.findById(lender._id, (err,lender)=>
+                                            {
+                                               if (err){
+                                                   console.log(err);
+
+                                               }
+                                               else{
+                                                lender.wallet-=lender.amtcontrib;
+                                                lender.save();
+                                            }
+                                            })
+                                        })
                                         user.save();
                                     }
 
@@ -200,8 +214,6 @@ var interTimer = setInterval(() => {
    
 }, dayDuration);
 
-const interestRate = 0.12;
-
 var installTimer = setInterval(() => {
     Loan.find({ status: 'accepted' }, (err, loans) => {
         if (err) {
@@ -217,19 +229,22 @@ var installTimer = setInterval(() => {
                             loan.status = 'paid';
                         }
                         User.findById(loan.recepient._id,(err,user)=>{       
-                        user.wallet -= parseFloat(((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue);
+                        user.wallet -= parseFloat(((loan.amtReq)+((loan.amtReq*loan.interest*loan.dateDue)/12))/loan.dateDue);
                         if(user.wallet>=0){
                             user.save();
                             loan.collablender.forEach(payee=>{
                                 User.findById(payee._id,(err,paye)=>{
-                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
+                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*loan.interest*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
                                     paye.save();
                                 })
     
                             })
 
-                        }else{
+                        }
+                        else
+                        {
                             loan.status = 'default';
+                           console.log("Hello");
                         }
 
                         })
@@ -241,7 +256,7 @@ var installTimer = setInterval(() => {
                     if(loan.status !== 'default'){
                         loan.dateRemaining=loan.dateRemaining-1;
                     }
-                    
+                    //console.log("Hello");
                     loan.save();
                 })
 
@@ -252,7 +267,6 @@ var installTimer = setInterval(() => {
 
    
 }, dayDuration);
-
 
 var defaultTimer = setInterval(()=>{
     Loan.find({status: 'default'},(err,loans)=>{

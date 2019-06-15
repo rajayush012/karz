@@ -207,7 +207,6 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
 })
 
-
 router.get('/profile',(req,res)=>{
     res.render('user/dashboard/user');
 })
