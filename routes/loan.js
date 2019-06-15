@@ -218,19 +218,22 @@ var interTimer = setInterval(() => {
    
 }, dayDuration);
 
-                        
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'alaapbanerjee08@gmail.com',
+      pass: 'ALAAP008'
+    }
+  });
 
-<<<<<<< HEAD
-=======
                   
 
->>>>>>> 5c1f757d4923d6e8b8fa361296c719881a871af5
 var installMentTimer = setInterval(()=>{
 
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
-            if(loan.dateRemaining%30===0){
+            if(loan.dateRemaining%30===0 || loan.dateRemaining%30<0){
                 
                 User.findById(loan.recepient,(err,recepient)=>{
                     recepient.wallet-=loan.emi;
@@ -244,22 +247,16 @@ var installMentTimer = setInterval(()=>{
                             });
                         })
                     }else{
+                        
                             loan.status = 'default';
-                            var transporter = nodemailer.createTransport({
-                                service: 'gmail',
-                                auth: {
-                                  user: 'alaapbanerjee08@gmail.com',
-                                  pass: 'ALAAP008'
-                                }
-                              });
-                              
-                              var mailOptions = {
+                            
+                            var mailOptions = {
                                 from: 'alaapbanerjee08@gmail.com',
-                                to: 'user.email',
-                                subject: 'Sending Email using Node.js',
-                                text: 'That was easy!'
+                                to: recepient.email,
+                                subject: `LOAN DEFAULT`,
+                                html: `Sir/Ma'am,<br> Your wallet balance is too low for further payments. Please, recharge your wallet immediately.<br><br>Regards,<br>Team Karz`
                               };
-                              
+
                               transporter.sendMail(mailOptions, function(error, info){
                                 if (error) {
                                   console.log(error);
@@ -267,7 +264,9 @@ var installMentTimer = setInterval(()=>{
                                   console.log('Email sent: ' + info.response);
                                 }
                               });
-                        console.log("Hello Defaulter");
+
+                              loan.save();
+
                     }  
                 });
 
@@ -283,24 +282,7 @@ var installMentTimer = setInterval(()=>{
 },dayDuration);
 
 
-var defaultTimer = setInterval(()=>{
-    Loan.find({status: 'default'},(err,loans)=>{
-        loans.forEach(loan=>{
-            console.log('hello');
-            User.findById(loan.recepient._id,(err,user)=>{
-                const sgMail = require('@sendgrid/mail');
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-                const msg = {
-                            to: user.email,
-                            from: 'alaapbanerjee08@gmail.com',
-                            subject: 'Sending with Twilio SendGrid is Fun',
-                            text: 'and easy to do anywhere, even with Node.js'
-};
-sgMail.send(msg);
-            })
-        })
-    })
-},dayDuration)
+
 
 
 module.exports = router;
