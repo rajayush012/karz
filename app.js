@@ -26,7 +26,7 @@ mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?r
 
 
 
-const port = 3000;
+const port = 3002;
 const app = express();
 
 app.use(express.static(__dirname+'/public/'));
