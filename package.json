@@ -18,6 +18,7 @@
     "ejs": "^2.6.1",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "financejs": "^4.1.0",
     "fs-extra": "^8.0.1",
     "mongoose": "^5.5.14",
     "morgan": "^1.9.1",
