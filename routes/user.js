@@ -5,7 +5,7 @@ const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
 const multer = require('multer');
-const KYC=require('../models/kycModels')
+const Kyc=require('../models/kycModels')
 
 var storage = multer.diskStorage({
     destination: 'public/userAssets/uploads/',
@@ -65,16 +65,20 @@ router.post('/kyc',isLoggedIn,uploadKyc.fields([
     { name:'panImage' ,maxCount:1 },
     { name:'salarySlip' ,maxCount:1 }
 ]),(req,res)=>{
-    KYC.create({
+    Kyc.create({
         adhaarno:req.body.adhaarno,
         panno: req.body.panno,
         salary: req.body.salary,
         profile: req.body.profile,
-        adhaarImage: req.files.adhaarImage.path,
-        panImage: req.files.panImage.path,
-        salarySlip: req.files.salarySlip.path
+        adhaarImage: req.files.adhaarImage[0].path,
+        panImage: req.files.panImage[0].path,
+        salarySlip: req.files.salarySlip[0].path
     },(err,kyc)=>{
 
+        if(err){
+            console.log(err);
+        }
+        console.log(kyc);
         User.findById(req.user._id,(err,user)=>{
             user.kyc=kyc._id;
             user.save();
@@ -138,6 +142,7 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
 })
 
+<<<<<<< HEAD
 router.get('/kyc', (req,res)=>{
     res.render('user/kyc');
 })
@@ -160,6 +165,12 @@ router.post('/submit-form', (req, res) => {
         res.end()
       })
   })
+=======
+
+router.get('/profile',(req,res)=>{
+    res.render('user/dashboard/user');
+})
+>>>>>>> 3c51a3be9569cd89455e1909d0c8f1c5fd45b898
 
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());
@@ -169,5 +180,4 @@ function isLoggedIn(req,res,next){
      res.redirect('/user/login');
  }
  
-
 module.exports = router;
