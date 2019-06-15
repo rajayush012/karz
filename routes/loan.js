@@ -105,6 +105,19 @@ router.post('/:loanid/bid', (req, res) => {
                                         console.log(user);
                                     } else {
                                         user.wallet += loan.amtReq;
+                                        loan.collablender.forEach(lender=>{
+                                            User.findById(lender._id, (err,lender)=>
+                                            {
+                                               if (err){
+                                                   console.log(err);
+
+                                               }
+                                               else{
+                                                lender.wallet-=lender.amtcontrib;
+                                                lender.save();
+                                            }
+                                            })
+                                        })
                                         user.save();
                                     }
 
