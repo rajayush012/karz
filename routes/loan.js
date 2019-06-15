@@ -218,10 +218,27 @@ var interTimer = setInterval(() => {
    
 }, dayDuration);
 
+                        
 
-                        }
-                        else
-                        {
+var installMentTimer = setInterval(()=>{
+
+    Loan.find({status:'accepted'},(err,loans)=>{
+        loans.forEach(loan=>{
+           // console.log(loan.dateRemaining);
+            if(loan.dateRemaining%30===0){
+                
+                User.findById(loan.recepient,(err,recepient)=>{
+                    recepient.wallet-=loan.emi;
+                    if(recepient.wallet>=0){
+                        recepient.save();
+                        loan.collablender.forEach(lender=>{
+                            User.findById(lender._id, (err,lenderr)=>{
+                                //console.log(parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi)));
+                                lenderr.wallet += parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi));
+                                lenderr.save();
+                            });
+                        })
+                    }else{
                             loan.status = 'default';
                             var transporter = nodemailer.createTransport({
                                 service: 'gmail',
@@ -246,28 +263,6 @@ var interTimer = setInterval(() => {
                                 }
                               });
                         console.log("Hello Defaulter");
-                        }
-
-var installMentTimer = setInterval(()=>{
-
-    Loan.find({status:'accepted'},(err,loans)=>{
-        loans.forEach(loan=>{
-           // console.log(loan.dateRemaining);
-            if(loan.dateRemaining%30===0){
-                
-                User.findById(loan.recepient,(err,recepient)=>{
-                    recepient.wallet-=loan.emi;
-                    if(recepient.wallet>=0){
-                        recepient.save();
-                        loan.collablender.forEach(lender=>{
-                            User.findById(lender._id, (err,lenderr)=>{
-                                //console.log(parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi)));
-                                lenderr.wallet += parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi));
-                                lenderr.save();
-                            });
-                        })
-                    }else{
-                        loan.status = 'default';
                     }  
                 });
 
