@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels')
-
+const Finance = require('financejs');
+const finance = Finance();
 
 //showing all loans
 
@@ -45,6 +46,7 @@ router.post("/new", isLoggedIn, (req, res) => {
         dateRequested: Date.now(),
         dateDue: req.body.date*30,
         dateRemaining: req.body.date*30,
+        
     }, (err, loan) => {
         if (err) {
             console.log(err);
