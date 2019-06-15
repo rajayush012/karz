@@ -142,35 +142,9 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
 })
 
-<<<<<<< HEAD
-router.get('/kyc', (req,res)=>{
-    res.render('user/kyc');
-})
-router.post('/submit-form', (req, res) => {
-    new formidable.IncomingForm().parse(req)
-      .on('field', (name, panImage) => {
-        console.log('Field', name, panImage)
-      })
-      .on('file', (name, file) => {
-        console.log('Uploaded file', name, file)
-      })
-      .on('aborted', () => {
-        console.error('Request aborted by the user')
-      })
-      .on('error', (err) => {
-        console.error('Error', err)
-        throw err
-      })
-      .on('end', () => {
-        res.end()
-      })
-  })
-=======
-
 router.get('/profile',(req,res)=>{
     res.render('user/dashboard/user');
 })
->>>>>>> 3c51a3be9569cd89455e1909d0c8f1c5fd45b898
 
 function isLoggedIn(req,res,next){
     // console.log(req.isAuthenticated());

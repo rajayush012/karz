@@ -48,7 +48,7 @@ router.post("/new", isLoggedIn, (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    user.loanreq.push(loan._id);
+                    user.loansTaken.push(loan._id);
                     user.save();
                     res.redirect(`/loan/${loan._id}`);
                 }
@@ -198,8 +198,11 @@ var installTimer = setInterval(() => {
     
                             })
 
-                        }else{
+                        }
+                        else
+                        {
                             loan.status = 'default';
+                           console.log("Hello");
                         }
 
                         })
@@ -211,7 +214,7 @@ var installTimer = setInterval(() => {
                     if(loan.status !== 'default'){
                         loan.dateRemaining=loan.dateRemaining-1;
                     }
-                    
+                    //console.log("Hello");
                     loan.save();
                 })
 
@@ -222,7 +225,6 @@ var installTimer = setInterval(() => {
 
    
 }, dayDuration);
-
 
 var defaultTimer = setInterval(()=>{
     Loan.find({status: 'default'},(err,loans)=>{
