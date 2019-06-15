@@ -8,6 +8,7 @@ const loanSchema =new mongoose.Schema({
             amtcontrib: {type: Number}
                  
         }],
+    interest: {type: Number, required: true},
     amtReq:{type: Number, required: true},
     amtSatisfied:{type: Number, default: 0},
     timeForBid:{type: Number, default: 15},
