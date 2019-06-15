@@ -18,7 +18,7 @@ router.post('/new',(req,res)=>{
             res.redirect('/')
         }
         passport.authenticate("local")(req,res, ()=>{
-        res.redirect(`admin/dashboard`);
+        res.redirect(`/admin/dashboard`);
         })
     } );
 

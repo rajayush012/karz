@@ -101,7 +101,7 @@ router.post('/new',uploadtest.single('file'),(req,res)=>{
 })
 
 router.get ('/kyc',isLoggedIn,(req,res)=>{
-    res.render('user/kyc');
+    res.render('user/kyc',{message:""});
 })
 
 router.post('/kyc',isLoggedIn,uploadtest.fields([
@@ -109,7 +109,8 @@ router.post('/kyc',isLoggedIn,uploadtest.fields([
     { name:'panImage' ,maxCount:1 },
     { name:'salarySlip' ,maxCount:1 }
 ]),(req,res)=>{
-    if(req.files.length !== 3){
+
+    if(req.files == null){
         res.render('user/kyc',{message:'Upload all images'})
     }
     else{
