@@ -65,7 +65,11 @@ background: linear-gradient(to right, #111111, #111111); /* W3C, IE 10+/ Edge, F
       <div class="logo">
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="/dashboard/assets/img/logo-small.png">
+              <% if(user.profilePic){%> 
+                <img src="<%=user.profilePic.substring(6)%>">
+               <%}else{%> 
+               <img src="/dashboard/assets/img/logo-small.png"> <%} %>
+  
           </div>
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
@@ -128,12 +132,14 @@ background: linear-gradient(to right, #111111, #111111); /* W3C, IE 10+/ Edge, F
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
+                    <span class="d-lg-none d-md-block">Settings</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   
                   <a class="dropdown-item" href="/user/profile">Signed in as <%= user.username%></a>
+                  <%if(user.kyc === undefined ){%>
+                  <a class="dropdown-item" href="/user/kyc">Upload KYC</a> <%}%>
                   <a class="dropdown-item" href="/user/logout">Logout</a>
                 </div>
               </li>
@@ -268,7 +274,16 @@ background: linear-gradient(to right, #111111, #111111); /* W3C, IE 10+/ Edge, F
                   <h5 class="card-title text-center">Apply for a new Loan</h5>
                 </div>
                 <div class="card-body ">
+<<<<<<< HEAD
                 <a class="btn btn-large btn-danger btn-block" href="/loan/new" >Apply here!</a>
+=======
+                <% if(user.kycstatus === 'approved'){%>
+                <a class="btn btn-large btn-success btn-block" href="/loan/new" >Apply here!</a>
+                <% }else{ %>
+                  <a class="btn btn-large disabled btn-success btn-block" href="#" >Apply here!</a>
+                  <p class="text-danger">You can't apply for a loan until your KYC is approved</p>
+                  <% } %>
+>>>>>>> 3c51a3be9569cd89455e1909d0c8f1c5fd45b898
                   </ul>
                 </div>
                 
