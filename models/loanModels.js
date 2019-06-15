@@ -15,7 +15,8 @@ const loanSchema =new mongoose.Schema({
     dateRequested:{type: Date},
     dateDue: {type: Number},
     dateRemaining: {type:Number},
-    status:{type: String, default: 'pending'}
+    status:{type: String, default: 'pending'},
+    emi:{type: String}
 })
 
 module.exports = mongoose.model('Loans', loanSchema);

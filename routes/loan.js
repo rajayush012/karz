@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels')
-const Finance = require('financejs');
-const finance = Finance();
+var Finance = require('financejs');
+var finance = new Finance();
+
 
 //showing all loans
 
@@ -47,7 +48,7 @@ router.post("/new", isLoggedIn, (req, res) => {
         dateRequested: Date.now(),
         dateDue: req.body.date*30,
         dateRemaining: req.body.date*30,
-        
+        emi: finance.AM(req.body.amount,req.body.interest,req.body.date,1)
     }, (err, loan) => {
         if (err) {
             console.log(err);
@@ -222,19 +223,20 @@ var installTimer = setInterval(() => {
             if (loans.length !== 0) {
                // console.log(loans);
                 loans.forEach(loan=>{
-                    if(loan.dateRemaining%30===0){
+
+                    if(loan.dateRemaining%30===0&&loan.dateRemaining!==loan.dateDue){
                         //payment
                         //console.log(loan._id ,'-',loan.dateRemaining);
                         if(loan.dateRemaining<=0){
                             loan.status = 'paid';
                         }
                         User.findById(loan.recepient._id,(err,user)=>{       
-                        user.wallet -= parseFloat(((loan.amtReq)+((loan.amtReq*loan.interest*loan.dateDue)/12))/loan.dateDue);
+                        user.wallet -= loan.emi;
                         if(user.wallet>=0){
                             user.save();
                             loan.collablender.forEach(payee=>{
                                 User.findById(payee._id,(err,paye)=>{
-                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*loan.interest*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
+                                    paye.wallet += ((payee.amtcontrib/loan.amtReq)*(loan.emi));
                                     paye.save();
                                 })
     
@@ -286,7 +288,6 @@ sgMail.send(msg);
         })
     })
 },dayDuration)
-
 
 
 module.exports = router;
