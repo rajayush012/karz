@@ -18,11 +18,59 @@
   <link href="/dashboard/assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/dashboard/assets/demo/demo.css" rel="stylesheet" />
+  <style>
+  .content{
+    background: #ADA996;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+  }
+  .navbar{
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+  }
+ 
+  .sidebar-wrapper{
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+  }
+  .simple-text {
+   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+
+  }
+  
+  .card-header{
+  
+  }
+  .card-footer{
+  
+  }
+  .logo{
+    
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+
+  }
+
+
+  .card-title{
+    color: #000000;
+  }
+  
+  </style>
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger">
+    <div class="sidebar"  data-active-color="danger">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
@@ -70,7 +118,7 @@
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -235,7 +283,7 @@
             <div class="col-md-12">
               <div class="card ">
                 <div class="card-header text-center">
-                  <h5 class="card-title text-danger text-center">Apply for a new Loan</h5>
+                  <h5 class="card-title text-center">Apply for a new Loan</h5>
                 </div>
                 <div class="card-body ">
                 <% if(user.kycstatus === 'approved'){%>
@@ -256,7 +304,7 @@
               <div class="col-md-12">
                 <div class="card ">
                   <div class="card-header text-center">
-                    <h5 class="card-title text-danger text-center">Loan feeds!</h5>
+                    <h5 class="card-title  text-center">Loan feeds!</h5>
                   </div>
                   <div class="card-body ">
                   <a class="btn btn-large btn-warning btn-block" href="/loan/showall" >Review and lend loans!</a>
