@@ -221,7 +221,7 @@ var installMentTimer = setInterval(()=>{
 
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
-            console.log(loan.dateRemaining);
+           // console.log(loan.dateRemaining);
             if(loan.dateRemaining%30===0){
                 
                 User.findById(loan.recepient,(err,recepient)=>{

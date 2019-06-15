@@ -10,19 +10,16 @@
    My Dashboard
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
+ 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
+  
   <link href="/dashboard/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/dashboard/assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
+ 
   <link href="/dashboard/assets/demo/demo.css" rel="stylesheet" />
   <style>
-  .content{
-   
-
-  }
+  
   .navbar{
     background: #39424E;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
@@ -62,14 +59,12 @@ background: linear-gradient(to right, #39424E, #39424E);
 <body class="">
   <div class="wrapper ">
     <div class="sidebar"  data-active-color="danger">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
+     
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="#" class="simple-text logo-mini">
           <div class="logo-image-small">
               <% if(user.profilePic){%> 
-                <img src="<%=user.profilePic.substring(6)%>">
+                <img src="data:image/jpeg;base64,<%=user.profilePic%>">
                <%}else{%> 
                <img src="/dashboard/assets/img/logo-small.png"> <%} %>
   
@@ -77,9 +72,7 @@ background: linear-gradient(to right, #39424E, #39424E);
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
           <%= user.name %>
-          <!-- <div class="logo-image-big">
-            <img src="../assets/img/logo-big.png">
-          </div> -->
+       
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -151,13 +144,7 @@ background: linear-gradient(to right, #39424E, #39424E);
           </div>
         </div>
       </nav>
-      <!-- End Navbar -->
-      <!-- <div class="panel-header panel-header-lg">
-  
-  <canvas id="bigDashboardChart"></canvas>
-  
-  
-</div> -->
+   
       <div class="content">
         <div class="row">
        
@@ -391,14 +378,9 @@ background: linear-gradient(to right, #39424E, #39424E);
             <nav class="footer-nav">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
+                  <a href="#" target="_blank">the Old Monks</a>
                 </li>
-                <li>
-                  <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
-                </li>
+                
               </ul>
             </nav>
             <div class="credits ml-auto">
