@@ -283,24 +283,24 @@ var installMentTimer = setInterval(()=>{
 },dayDuration);
 
 
-var defaultTimer = setInterval(()=>{
-    Loan.find({status: 'default'},(err,loans)=>{
-        loans.forEach(loan=>{
-            console.log('hello');
-            User.findById(loan.recepient._id,(err,user)=>{
-                const sgMail = require('@sendgrid/mail');
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-                const msg = {
-                            to: user.email,
-                            from: 'alaapbanerjee08@gmail.com',
-                            subject: 'Sending with Twilio SendGrid is Fun',
-                            text: 'and easy to do anywhere, even with Node.js'
-};
-sgMail.send(msg);
-            })
-        })
-    })
-},dayDuration)
+// var defaultTimer = setInterval(()=>{
+//     Loan.find({status: 'default'},(err,loans)=>{
+//         loans.forEach(loan=>{
+//             console.log('hello');
+//             User.findById(loan.recepient._id,(err,user)=>{
+//                 const sgMail = require('@sendgrid/mail');
+//                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+//                 const msg = {
+//                             to: user.email,
+//                             from: 'alaapbanerjee08@gmail.com',
+//                             subject: 'Sending with Twilio SendGrid is Fun',
+//                             text: 'and easy to do anywhere, even with Node.js'
+// };
+// sgMail.send(msg);
+//             })
+//         })
+//     })
+// },dayDuration)
 
 
 module.exports = router;
