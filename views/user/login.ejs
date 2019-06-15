@@ -1,9 +1,108 @@
-<form action="/user/login" method="POST">
-    <label>Username</label>
-    <input type="text" name="username">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel=stylesheet href="login.css">
 
-    <label>Password</label>
-    <input type="text" name="password">
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <title>Login</title>
+    <style>
+    .btn {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    background-color:green;
+    color:white;
+   
+}
+.form{
+    margin-top:10px;
+    align-content: center;
+}
+.submitbtn{
+    padding:5px;
+    margin-left:4%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius:10px;
+  }
+ .form-control{
+      margin-bottom: 20px;
+      margin-top:7px;
+      width:400px;
+      height:26px;
+      border-radius:10px;
+      padding-left:5px;
+     border: 0.5px solid lightgray;
+      }
+  
+     .sr-only{
+          margin-bottom:20px;
+      }
+.form-signin{
+    width:400px;
+    margin-top: 120px;
+    margin-left:450px;
+    }
 
-    <input type="submit">
-</form>
+.text-center{
+     margin-top:10px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    
+  }
+
+
+  .btn:hover{
+      background-color: black !important;
+      box-shadow: 0 15px 15px 5px black;
+      color:white;
+  }
+ 
+  .card{
+width:500px;
+box-shadow: 0 10px 10px 5px lightgray;
+
+ margin:150px auto;
+ height:270px;
+ border-radius: 10px;
+  }
+
+  </style>
+</head>
+
+    <body class="text-center">
+            <div class="card">
+                    <div class="card-body">
+                        <form action="/user/login" method="POST">
+                                <h1 class="card-title" >Login</h1>
+                                <label for="inputEmail" class="sr-only" >Username</label><br>
+                                <input type="text" name="username" class="form-control" placeholder="Username" required autofocus><br>
+                                <label class="sr-only">Password</label><br>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                           <button type="submit" class="btn btn-dark submitbtn">Log in</button>
+                    </form>
+                    </div>
+                  </div>
+                
+       
+    
+     
+     
+     
+    </form>
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </div>
+      
+</body>
+</html>

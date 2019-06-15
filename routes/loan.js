@@ -6,6 +6,8 @@ const passport = require('passport');
 const Loan = require('../models/loanModels')
 
 
+//showing all loans
+
 router.get('/showall', isLoggedIn, (req, res) => {
     Loan.find({}, (err, loans) => {
         if (err) {
@@ -27,6 +29,10 @@ router.get('/showall', isLoggedIn, (req, res) => {
         }
     });
 });
+
+//---------------------
+
+//new loan routes ------------------
 
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('loan/newloan');
@@ -60,11 +66,19 @@ router.post("/new", isLoggedIn, (req, res) => {
     })
 })
 
+//------------------------
+
+//loan details-----------------
+
 router.get('/:loanid', isLoggedIn, (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
         res.render('loan/loandetails', { loan: loan });
     })
 })
+
+//----------------
+
+//bidding routes------------
 
 router.get('/:loanid/bid', isLoggedIn, (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
@@ -80,8 +94,6 @@ router.get('/:loanid/bid', isLoggedIn, (req, res) => {
     });
 
 });
-
-
 
 
 
