@@ -48,7 +48,7 @@ router.post("/new", isLoggedIn, (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    user.loanreq.push(loan._id);
+                    user.loansTaken.push(loan._id);
                     user.save();
                     res.redirect(`/loan/${loan._id}`);
                 }
@@ -81,12 +81,16 @@ router.get('/:loanid/bid', isLoggedIn, (req, res) => {
 
 });
 
+
+
+
+
 router.post('/:loanid/bid', (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
         if (err) {
             console.log(err);
         } else {
-            if (req.body.amount <= (loan.amtReq - loan.amtSatisfied) && req.body.amount !== 0) {
+            if (req.body.amount <= (loan.amtReq - loan.amtSatisfied) && req.body.amount != 0) {
 
                 User.findById(req.user._id, (err, user) => {
                     if (err) {
@@ -155,6 +159,18 @@ var interTimer = setInterval(() => {
                 loans.forEach(loan => {
                     if (loan.timeForBid <= 0) {
                         loan.status = 'declined';
+                        if(loan.collablender.length>0){
+                            loan.collablender.forEach(lender=>{
+
+                                User.findById(lender._id,(err,len)=>{
+                                    len.wallet += lender.amtcontrib;
+                                    len.save();
+                                });
+
+                            })
+                        }
+                        
+
                     }
                     (async () => {
                         loan.timeForBid -= 1;
