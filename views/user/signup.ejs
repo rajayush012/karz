@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup</title>
+
+    <style>
+    
+  .sign-up{
+    text-align: center;
+    padding: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.submitbtn{
+    
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 0px;
+    width:100px;
+    height:30px;
+    background-color:green;
+    color:white;
+    border-radius:10px;
+}
+
+.form-control{
+    margin-top:7px;
+    margin-bottom: 10px;
+    width:400px;
+    height:25px;
+     border: 0.5px solid lightgray;
+    border-radius:10px;
+    padding-left: 5px;
+}
+.form{
+   
+    margin-left:20px;
+    width:400px;
+  
+}
+.jumbotron-new{
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color:black;
+  }
+.btn:hover{
+    background-color: black !important;
+    box-shadow: 0 15px 15px 5px black;
+    color:white;
+}
+#message{
+    font-weight: bolder;
+}
+.card{
+    width:500px;
+    box-shadow: 0 10px 10px 5px lightgray;
+    width:450px;  
+     margin:10px 450px ;
+     height:500px;
+     border-radius: 10px;
+      }
+
+</style>
+</head>
+<body>
+     <!--sign up form-->
+
+     <div class="card">
+            <div class="card-body">
+                    <div id="sup"class="jumbotron-new">
+                            <form action="/author/signup" method="POST">
+                                <div class="form">
+                                   <h1 class="sign-up">Sign up</h1>
+                                    <div class="form-group1">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" class="form-control" name="name" placeholder="Full name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Username</label>
+                                            <input type="text" class="form-control" name="username" placeholder="Username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" class="form-control" name="email" placeholder="Enter email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password">
+                                            <p id="message"></p>
+                                        </div>
+                                        <button type="submit" class="btn btn-dark submitbtn">Sign up</button>
+                         </div>
+                      </div>
+       </form>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
