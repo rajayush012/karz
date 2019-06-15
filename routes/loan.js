@@ -220,6 +220,11 @@ var interTimer = setInterval(() => {
 
                         
 
+<<<<<<< HEAD
+=======
+                  
+
+>>>>>>> 5c1f757d4923d6e8b8fa361296c719881a871af5
 var installMentTimer = setInterval(()=>{
 
     Loan.find({status:'accepted'},(err,loans)=>{
