@@ -5,13 +5,51 @@ const User = require('../models/userModels');
 const passport = require('passport');
 const Loan = require('../models/loanModels');
 const multer = require('multer');
-const Kyc=require('../models/kycModels')
+const Kyc=require('../models/kycModels');
+const fs = require('fs-extra');
+const util = require('util');
+const bts = require('base64-to-image');
 
 var storage = multer.diskStorage({
     destination: 'public/userAssets/uploads/',
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now()+ '.jpg')
     }
+})
+
+var uploadtest = multer({limits: {fileSize: 2000000 },dest:'/uploads/'}) 
+
+router.get('/test',isLoggedIn,(req,res)=>{
+    res.render('test');
+});
+
+router.post('/test',uploadtest.single('pic1'),(req,res)=>{
+    if(req.file == null){
+        res.render('/test',{message: 'Upload!'});
+    }else{
+        var newImg = fs.readFileSync(req.file.path);
+        var encImg = newImg.toString('base64');
+       
+        User.findById(req.user._id,(err,user)=>{
+            user.profilePic = encImg;
+            user.save();
+            fs.remove(req.file.path,(err)=>{
+                res.render('success');
+            })
+        });
+    }
+});
+
+router.get('/all',(req,res)=>{
+    User.find({},(err,users)=>{
+        res.send(users);
+    })
+})
+
+router.get('/final',isLoggedIn,(req,res)=>{
+    User.findById(req.user._id,(err,user)=>{
+      res.render('final',{user});
+    })
 })
 
 var storageKyc = multer.diskStorage({
@@ -25,13 +63,6 @@ var upload = multer({ storage: storage })
 var uploadKyc = multer({ storage: storageKyc })
 
 
-router.get('/new',(req,res)=>{
-    res.render('user/newuser')
-});
-
-
-
-
 router.post('/flush/:id',(req,res)=>{
     User.findById(req.params.id, (err,user)=>{
         user.wallet -= req.body.trans;
@@ -41,51 +72,84 @@ router.post('/flush/:id',(req,res)=>{
     res.redirect('/user/dashboard');
 })
 
-router.post('/new',upload.single('file'),(req,res)=>{
+router.get('/new',(req,res)=>{
+    message ="";
+    res.render('user/newuser',{message});
+});
+
+
+router.post('/new',uploadtest.single('file'),(req,res)=>{
   // console.log(req.file);
-    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email,profilePic: req.file.path});
+
+    if(req.file== null){
+        res.render('user/newUser',{message: "Upload a pro pic"});
+    }else{
+        var newImg = fs.readFileSync(req.file.path);
+        var encImg = newImg.toString('base64');
+       
+    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email,profilePic: encImg});
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
             console.log(err);
-            res.redirect('/')
+            res.redirect('user/new');
         }
         passport.authenticate("local")(req,res, ()=>{
         res.redirect(`/user/dashboard`)
         })
     } );
-
+    }
 })
 
 router.get ('/kyc',isLoggedIn,(req,res)=>{
     res.render('user/kyc');
 })
 
-router.post('/kyc',isLoggedIn,uploadKyc.fields([
+router.post('/kyc',isLoggedIn,uploadtest.fields([
     { name:'adhaarImage' ,maxCount:1 },
     { name:'panImage' ,maxCount:1 },
     { name:'salarySlip' ,maxCount:1 }
 ]),(req,res)=>{
-    Kyc.create({
-        adhaarno:req.body.adhaarno,
-        panno: req.body.panno,
-        salary: req.body.salary,
-        profile: req.body.profile,
-        adhaarImage: req.files.adhaarImage[0].path,
-        panImage: req.files.panImage[0].path,
-        salarySlip: req.files.salarySlip[0].path
-    },(err,kyc)=>{
+    if(req.files.length !== 3){
+        res.render('user/kyc',{message:'Upload all images'})
+    }
+    else{
+        var newAdhaar = fs.readFileSync(req.files.adhaarImage[0].path);
+        var encAd = newAdhaar.toString('base64');
+        var newPan = fs.readFileSync(req.files.panImage[0].path);
+        var encPa = newPan.toString('base64');
+        var newSal = fs.readFileSync(req.files.salarySlip[0].path);
+        var encSal = newSal.toString('base64');
+        Kyc.create({
+            adhaarno:req.body.adhaarno,
+            panno: req.body.panno,
+            salary: req.body.salary,
+            profile: req.body.profile,
+            adhaarImage: encAd,
+            panImage: encPa,
+            salarySlip :encSal 
+        },(err,kyc)=>{
+    
+            if(err){
+                console.log(err);
+            }
+            console.log(kyc);
+            fs.remove(req.files.adhaarImage[0].path,(err)=>{
+                fs.remove(req.files.panImage[0].path,(err2)=>{
+                    fs.remove(req.files.salarySlip[0].path,(err3)=>{
+                        User.findById(req.user._id,(err,user)=>{
+                            user.kyc=kyc._id;
+                            user.save();
+                            res.redirect('/user/dashboard');
+                        })        
+                        
+                    })
+                })
+            })
+           
+        })
+    }
 
-        if(err){
-            console.log(err);
-        }
-        console.log(kyc);
-        User.findById(req.user._id,(err,user)=>{
-            user.kyc=kyc._id;
-            user.save();
-            res.redirect('/user/dashboard');
-        })        
-        
-    })
+    
 });
 
 
