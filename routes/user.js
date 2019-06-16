@@ -82,7 +82,7 @@ router.post('/new',uploadtest.single('file'),(req,res)=>{
   // console.log(req.file);
 
     if(req.file== null){
-        res.render('user/newUser',{message: "Upload a pro pic"});
+        res.render('user/signup',{message: "Complete all fields"});
     }else{
         var newImg = fs.readFileSync(req.file.path);
         var encImg = newImg.toString('base64');
@@ -206,7 +206,6 @@ router.get('/logout',(req,res)=>{
     req.logOut();
     res.redirect('/');
 })
-
 
 router.get('/profile',(req,res)=>{
     res.render('user/dashboard/user');

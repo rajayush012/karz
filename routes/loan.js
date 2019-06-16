@@ -3,7 +3,12 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/userModels');
 const passport = require('passport');
-const Loan = require('../models/loanModels')
+const Loan = require('../models/loanModels');
+const nodemailer = require("nodemailer");
+
+
+var Finance = require('financejs');
+var finance = new Finance();
 
 
 //showing all loans
@@ -17,6 +22,7 @@ router.get('/showall', isLoggedIn, (req, res) => {
 
                 return (!loan.recepient.equals(req.user._id));
             })
+            filterLoans.reverse();
 
             User.findById(req.user._id,(err,user)=>{
                 if(err){
@@ -30,24 +36,32 @@ router.get('/showall', isLoggedIn, (req, res) => {
     });
 });
 
+
+
 //---------------------
 
 //new loan routes ------------------
 
 router.get('/new', isLoggedIn, (req, res) => {
-   User.findById(req.user._id, (err, user)=>{
-    res.render('loan/newloan',{user:user});
-   })
-    
+   
+    res.render('loan/newloan');
+});
+
+router.get('/daterem/:loanid',(req,res)=>{
+    Loan.findById(req.params.loanid,(err,loan)=>{
+        res.json(loan.dateRemaining);
+    });
 });
 
 router.post("/new", isLoggedIn, (req, res) => {
     Loan.create({
         recepient: req.user._id,
         amtReq: req.body.amount,
+        interest: req.body.interest,
         dateRequested: Date.now(),
         dateDue: req.body.date*30,
-        dateRemaining: req.body.date*30,
+        dateRemaining: (req.body.date*30)-1,
+        emi: finance.AM(req.body.amount,req.body.interest,req.body.date,1)
     }, (err, loan) => {
         if (err) {
             console.log(err);
@@ -75,7 +89,13 @@ router.post("/new", isLoggedIn, (req, res) => {
 
 router.get('/:loanid', isLoggedIn, (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
-        res.render('loan/loandetails', { loan: loan });
+        User.findById(req.user._id,(err,user)=>{
+            User.findById(loan.recepient,(err,recepient)=>{
+                res.render('loan/loandetails', { loan: loan,user:user ,recepient:recepient});
+            })
+
+        })
+       
     })
 })
 
@@ -121,9 +141,22 @@ router.post('/:loanid/bid', (req, res) => {
                                 loan.status = 'accepted';
                                 User.findById(loan.recepient, (err, user) => {
                                     if (err) {
-                                        console.log(user);
+                                        console.log(err);
                                     } else {
                                         user.wallet += loan.amtReq;
+                                        loan.collablender.forEach(lender=>{
+                                            User.findById(lender._id, (err,lender)=>
+                                            {
+                                               if (err){
+                                                   console.log(err);
+
+                                               }
+                                               else{
+                                                lender.wallet-=lender.amtcontrib;
+                                                lender.save();
+                                            }
+                                            })
+                                        })
                                         user.save();
                                     }
 
@@ -132,7 +165,7 @@ router.post('/:loanid/bid', (req, res) => {
                             user.wallet = parseInt(user.wallet) - parseInt(req.body.amount);
                             loan.save();
                             user.save();
-                            res.render('loan/bidsuccess');
+                            res.redirect(`loan/${loan._id}`);
                         }
                         else {
                             res.redirect('/loan/showall');
@@ -146,7 +179,7 @@ router.post('/:loanid/bid', (req, res) => {
 
             }
             else {
-                res.redirect('/loan/', req.params.loanid);
+                res.redirect('/loan/showall');
             }
 
 
@@ -200,79 +233,93 @@ var interTimer = setInterval(() => {
 
    
 }, dayDuration);
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'alaapbanerjee08@gmail.com',
+      pass: 'ALAAP008'
+    }
+  });
 
-const interestRate = 0.12;
+                  
 
-var installTimer = setInterval(() => {
-    Loan.find({ status: 'accepted' }, (err, loans) => {
-        if (err) {
-            console.log(err);
-        } else {
-            if (loans.length !== 0) {
-               // console.log(loans);
-                loans.forEach(loan=>{
-                    if(loan.dateRemaining%30===0){
-                        //payment
-                        //console.log(loan._id ,'-',loan.dateRemaining);
-                        if(loan.dateRemaining<=0){
-                            loan.status = 'paid';
-                        }
-                        User.findById(loan.recepient._id,(err,user)=>{       
-                        user.wallet -= parseFloat(((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue);
-                        if(user.wallet>=0){
-                            user.save();
-                            loan.collablender.forEach(payee=>{
-                                User.findById(payee._id,(err,paye)=>{
-                                    paye.wallet += (((loan.amtReq)+((loan.amtReq*interestRate*loan.dateDue)/12))/loan.dateDue)*(payee.amtcontrib/loan.amtReq); 
-                                    paye.save();
-                                })
-    
-                            })
+var installMentTimer = setInterval(()=>{
 
-                        }else{
-                            loan.status = 'default';
-                        }
-
-                        })
-
-                 
-
-
-                    }
-                    if(loan.status !== 'default'){
-                        loan.dateRemaining=loan.dateRemaining-1;
-                    }
-                    
-                    loan.save();
-                })
-
-            } 
-        }
-
-    });
-
-   
-}, dayDuration);
-
-
-var defaultTimer = setInterval(()=>{
-    Loan.find({status: 'default'},(err,loans)=>{
+    Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
-            console.log('hello');
-            User.findById(loan.recepient._id,(err,user)=>{
-                const sgMail = require('@sendgrid/mail');
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-                const msg = {
-                            to: user.email,
-                            from: 'alaapbanerjee08@gmail.com',
-                            subject: 'Sending with Twilio SendGrid is Fun',
-                            text: 'and easy to do anywhere, even with Node.js'
-};
-sgMail.send(msg);
-            })
+           // console.log(loan.dateRemaining);
+         //  console.log(loan.dateRemaining);
+           if ((30-loan.dateRemaining)%30>24)
+            {
+                User.findById(loan.recepient,(err,recepient)=>{
+                if (recepient.wallet<loan.emi)
+                {
+                var mailOptions = {
+                from: 'alaapbanerjee08@gmail.com',
+                to: recepient.email,
+                subject: `LOAN DEFAULT`,
+                html: `Sir/Ma'am,<br> Your wallet balance is too low for further payments. Please, recharge your wallet immediately.<br><br>Regards,<br>Team Karz`
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent for low balance: ' + info.response);
+                }
+              });
+        }
+    })
+}
+            if(loan.dateRemaining%30===0 && loan.dateRemaining>=0){
+                
+                User.findById(loan.recepient,(err,recepient)=>{
+                    recepient.wallet-=loan.emi;
+                    if(recepient.wallet>0){
+                        recepient.save();
+                        loan.collablender.forEach(lender=>{
+                            User.findById(lender._id, (err,lenderr)=>{
+                                //console.log(parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi)));
+                                lenderr.wallet += parseFloat((lender.amtcontrib/loan.amtReq)*(loan.emi));
+                                lenderr.save();
+                            });
+                        })
+                    }else{
+                        
+                            loan.status = 'default';
+                            
+                            var mailOptions = {
+                                from: 'alaapbanerjee08@gmail.com',
+                                to: recepient.email,
+                                subject: `LOAN DEFAULT`,
+                                html: `Sir/Ma'am,<br> You have defaulted.<br><br>Regards,<br>Team Karz`
+                              };
+
+                              transporter.sendMail(mailOptions, function(error, info){
+                                if (error) {
+                                  console.log(error);
+                                } else {
+                                  console.log('Email sent for loan default: ' + info.response);
+                                }
+                              });
+
+                              loan.save();
+
+                    }  
+                });
+
+              
+            }else if(loan.dateRemaining<0){
+                loan.status = 'paid';
+            }
+
+            loan.dateRemaining-=1;
+            loan.save();
         })
     })
-},dayDuration)
+
+
+},dayDuration);
+
 
 
 

@@ -1,26 +1,122 @@
-<%=message%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup</title>
 
-<form action="/user/kyc" method="post" enctype="multipart/form-data">
-<label> Adhaar No: </label>
-<input type="text" name="adhaarno">
-<br>
-<label> Adhaar Image: </label>
-<input type="file" name="adhaarImage">
-<br>
-<label> PAN No: </label>
-<input type="text" name="panno">
-<br>
-<label> PAN Image: </label>
-<input type="file" name="panImage">
-<br>
-<label> Salary: </label>
-<input type="text" name="salary">
-<br>
-<label> Salary Slip: </label>
-<input type="file" name="salarySlip">
-<br>
-<label> LinkedIn Profile: </label>
-<input type="text" name="profile">
-<br>
-<input type="submit" value="submit">
-</form>
+    <style>
+        	@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+            body{
+                font-family: 'Josefin Sans', sans-serif !important;
+            }
+    
+  .sign-up{
+    text-align: center;
+    padding: 30px;
+  
+}
+.submitbtn{
+    font-size: 15px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 0px;
+    width:300px;
+    height:50px;
+    padding: 10px;
+    background-color:green;
+    color:white;
+    transition: 0.3s;
+    border-radius:10px;
+}
+
+.form-control{
+    margin-top:7px;
+    margin-bottom: 10px;
+    width:400px;
+    height:25px;
+     border: 0.5px solid lightgray;
+    border-radius:10px;
+    padding-left: 5px;
+}
+.form{
+   
+   
+    width:400px;
+  
+}
+.jumbotron-new{
+  text-align: center;
+  
+  color:black;
+  }
+.btn:hover{
+   
+    box-shadow: 0 15px 15px 5px black;
+    color:white;
+}
+#message{
+    font-weight: bolder;
+}
+.card{
+    width:500px;
+    box-shadow: 0 10px 10px 5px lightgray;
+    width:450px;  
+     margin:10px auto ;
+    
+     border-radius: 10px;
+      }
+.form-control{
+    text-align: center;
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+     <!--sign up form-->
+     <% if(message){ %>
+        <div class="alert alert-danger text-center" role="alert">
+               <%=message%>
+              </div>
+     <% } %>
+     
+     <div class="card">
+         <div class="card-header text-center pt-3">
+             <h1>Upload your KYC</h1>
+         </div>
+            <div class="card-body">
+                    <div id="sup"class="jumbotron-new">
+                            <form action="/user/kyc" method="post" enctype="multipart/form-data">
+                                <label> Adhaar No: </label>
+                                <input class="form-control" type="text" name="adhaarno">
+                                <br>
+                                <label> Adhaar Image: </label>
+                                <input class="form-control" accept="image/*" type="file" name="adhaarImage">
+                                <br>
+                                <label> PAN No: </label>
+                                <input class="form-control"  type="text" name="panno">
+                                <br>
+                                <label> PAN Image: </label>
+                                <input class="form-control" accept="image/*" type="file" name="panImage">
+                                <br>
+                                <label> Salary: </label>
+                                <input class="form-control" type="text" name="salary">
+                                <br>
+                                <label> Salary Slip: </label>
+                                <input class="form-control" accept="image/*" type="file" name="salarySlip">
+                                <br>
+                                <label> LinkedIn Profile: </label>
+                                <input class="form-control" type="text" name="profile">
+                                <br>
+                                <input class="btn btn-success form-control" type="submit" value="Upload">
+                                </form>
+       <a class="btn btn-dark btn-large my-4" href="/user/dashboard">Go back</a>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
+
+
+
+

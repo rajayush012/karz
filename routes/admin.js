@@ -38,9 +38,10 @@ router.get('/login',(req,res)=>{
 
 router.get('/dashboard',isAdminAndLoggedIn,(req,res)=>{
     User.find({},(err,users)=>{
-        filteredUsers = users.filter(user=>{
+        var filteredUsers = users.filter(user=>{
             return (!user._id.equals(req.user._id))&&(user.isAdmin==='no');
         })
+        filteredUsers.reverse();
         User.findById(req.user._id,(err,user)=>{
             res.render('admin/adminHome',{users: filteredUsers,user:user});
         })

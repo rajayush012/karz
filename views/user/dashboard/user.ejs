@@ -18,83 +18,59 @@
   <link href="/dashboard/assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/dashboard/assets/demo/demo.css" rel="stylesheet" />
+  <style>
+
+@media screen {
+      .main-panel {
+        width: 100%;
+      }
+    }
+  .navbar{
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+color:white;
+  }
+  .sidebar-wrapper{
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+color:white;
+  }
+  .logo{
+    background: #39424E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #39424E, #39424E);
+color: white;
+  }
+  .sidebar-wrapper p{
+    color: white;
+  }
+  .simple-text{
+    color:white;
+  }
+ .title{
+   color:tomato;
+ }
+  .card-title{
+    padding:30px;
+    text-align: center;
+  }
+  .card-user1{
+    height:825px;
+  }
+ .no-border{
+   color: white !important;
+ }
+  </style>
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
-      <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="/dashboard/assets/img/logo-small.png">
-          </div>
-        </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-          <!-- <div class="logo-image-big">
-            <img src="../assets/img/logo-big.png">
-          </div> -->
-        </a>
-      </div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li>
-            <a href="./dashboard.html">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="./icons.html">
-              <i class="nc-icon nc-diamond"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="./map.html">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.html">
-              <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="active ">
-            <a href="./user.html">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./tables.html">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="./typography.html">
-              <i class="nc-icon nc-caps-small"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -104,7 +80,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a>
+            <a class="navbar-brand" href="#pablo">User Profile</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -212,8 +188,9 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Team Members</h4>
+                <h4 class="card-title">Company's worked for</h4>
               </div>
+              <hr>
               <div class="card-body">
                 <ul class="list-unstyled team-members">
                   <li>
@@ -224,15 +201,11 @@
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        DJ Khaled
+                        Amazon
                         <br />
-                        <span class="text-muted">
-                          <small>Offline</small>
-                        </span>
+                       
                       </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
+                     
                     </div>
                   </li>
                   <li>
@@ -243,15 +216,11 @@
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        Creative Tim
+                        FlipCart
                         <br />
-                        <span class="text-success">
-                          <small>Available</small>
-                        </span>
+                        
                       </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
+                      
                     </div>
                   </li>
                   <li>
@@ -262,15 +231,11 @@
                         </div>
                       </div>
                       <div class="col-ms-7 col-7">
-                        Flume
+                        DE Show
                         <br />
-                        <span class="text-danger">
-                          <small>Busy</small>
-                        </span>
+                       
                       </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
+                      
                     </div>
                   </li>
                 </ul>
@@ -278,87 +243,13 @@
             </div>
           </div>
           <div class="col-md-8">
-            <div class="card card-user">
-              <div class="card-header">
-                <h5 class="card-title">Edit Profile</h5>
+            <div class="card card-user1">
+              <div class="card-header2">
+                <h5 class="card-title">Profile</h5>
               </div>
+              <hr>
               <div class="card-body">
                 <form>
-                  <div class="row">
-                    <div class="col-md-5 pr-1">
-                      <div class="form-group">
-                        <label>Company (disabled)</label>
-                        <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
-                      </div>
-                    </div>
-                    <div class="col-md-3 px-1">
-                      <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" placeholder="Username" value="michael23">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" placeholder="Email">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" placeholder="Company" value="Chet">
-                      </div>
-                    </div>
-                    <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last Name" value="Faker">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" placeholder="Home Address" value="Melbourne, Australia">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="City" value="Melbourne">
-                      </div>
-                    </div>
-                    <div class="col-md-4 px-1">
-                      <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="Country" value="Australia">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>Postal Code</label>
-                        <input type="number" class="form-control" placeholder="ZIP Code">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>About Me</label>
-                        <textarea class="form-control textarea">Oh so, your weak rhyme You doubt I'll bother, reading into it</textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="update ml-auto mr-auto">
-                      <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
-                    </div>
-                  </div>
                 </form>
               </div>
             </div>

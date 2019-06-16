@@ -8,94 +8,136 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
 
 
 	<link rel="stylesheet" href="/home/assets/css/main.css" />
 	<style>
+		@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
 		@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-#header{
-	background: #39424E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #39424E, #39424E);
-}
-body{
-	font-family:inherit;
-}
-		nav{
-			background: #39424E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #39424E, #39424E);
+
+		#header {
+			background: #39424E;
+			/* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #39424E, #39424E);
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #39424E, #39424E);
 		}
+
+		body {
+			font-family: 'Josefin Sans', sans-serif;
+		}
+
+		nav {
+			background: #39424E;
+			/* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #39424E, #39424E);
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #39424E, #39424E);
+		}
+
 		.jumbotron {
 			text-align: center;
 			height: 100vh;
-			background-image: url('/userAssets/uploads/money.jpg');
-	background-size: cover;
-	background-repeat: no-repeat;
-	opacity: 0.7;
+			background-image: url('/dashboard/myassets/money.gif');
+			background-size: cover;
+			background-repeat: no-repeat;
+			opacity: 0.7;
 		}
 
 		.jumbotron p {
 			font-size: 15px;
 		}
 
-		.jumbotron h1 {
+		.text-shade {
+			color: #39424E;
 			padding: 10px;
-			margin-top: 10px;
-			margin-bottom: 10px;
+			margin-top: 130px;
+			
 			padding-top: 30px;
-			font-size: 60px;
+			
+			
 		}
 
-		.jumbotron button {
-			background: #39424E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #39424E, #39424E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-color: azure !important;
-box-shadow: 0 5px 5px 5px grey;
+		.jumbotron a {
+			background: #39424E;
+			
+			background: -webkit-linear-gradient(to right, #39424E, #39424E);
+
+			background: linear-gradient(to right, #39424E, #39424E);
+			color: azure !important;
+			box-shadow: 0 5px 5px 5px grey;
 		}
 
 		.jumbotron2 {
-			
 
-			height: 500px;
+			height: 400px;
+			padding-bottom: 30px;
 			text-align: center;
 		}
-		.jumbotron2 h1{
+
+		.jumbotron2 h1 {
 			padding: 10px;
-	
+
 			margin-bottom: 10px;
 			padding-top: 30px;
 			font-size: 60px;
-			
+
 		}
 
-		.card-deck{
-			height: 600px;
+		.text-shade{
+			font-weight: bolder !important;
+			font-size: 200px !important;
+			text-shadow:
+				3px 3px 0 white,
+				-1px -1px 0 white,
+				1px -1px 0 white,
+				-1px 1px 0 white,
+				1px 1px 0 white;
+		}
+
+		.card-deck {
+			
 			padding: 50px;
-			width:1500px;
+			width: 100%;
 			font-size: 15px;
-			box-shadow: 0 5px 5px 5px black;
-			border: 1px solid #ccc;
-    border-radius: 5px;
+			background-color: #39424E;
+			border-bottom: 1px solid #ccc;
+			border-radius: 5px;
 		}
-		.card-header{
+
+		.card-header {
 			text-align: center;
-			background: #39424E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #39424E, #39424E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-box-shadow: 0 5px 5px 5px black;
-color: white !important;
+			background: #39424E;
+			/* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #39424E, #39424E);
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #39424E, #39424E);
+			/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			box-shadow: 0 5px 5px 5px black;
+			color: white !important;
 		}
-		.card-text{
+
+		.card-text {
 			padding: 30px;
-			padding-top:70px;
+			padding-top: 70px;
 		}
-		#footer{
-			background: #39424E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #39424E, #39424E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #39424E, #39424E);
+
+		.top{
+			
+			margin-bottom: 40px;
+			box-shadow: 0 5px 5px 1px black;
+			
+		}
+		
+		
+		#footer {
+			background: #39424E;
+			/* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #39424E, #39424E);
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #39424E, #39424E);
 		}
 	</style>
 </head>
@@ -113,71 +155,103 @@ background: linear-gradient(to right, #39424E, #39424E);
 	<!-- Nav -->
 	<nav id="menu">
 		<ul class="links">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="elements.html">Dashboard</a></li>
-			<li><a href="generic.html">Login</a></li>
-			<li><a href="generic.html">SignUp</a></li>
-			<li><a href="generic.html">Logout</a></li>
+			<li><a href="/">Home</a></li>
+			<li><a href="/user/login">Login</a></li>
+			<li><a href="/user/new">SignUp</a></li>
 		</ul>
 	</nav>
 
 	<!-- Banner -->
 
 	<div class="jumbotron">
-		<h1 class="display-4">KARZ<h1>
+		<h1 class="display-1 text-shade">KARZ<h1>
 
-				<hr class="my-4">
-				<p>It uses utility classes for typography and spacing to space content out within the larger container.
+
+				<p>The P2P Lending app you were looking for.
 				</p>
-				<button class="btn btn-success btn-lg" href="#" role="button">Login</button>
-				<button class="btn btn-success btn-lg" href="#" role="button">SignUp</button>
+				<a class="btn btn-success btn-lg" href="/user/login" role="button">Login</a>
+				<a class="btn btn-success btn-lg" href="/user/new" role="button">SignUp</a>
 	</div>
 
-	<div class="jumbotron2">
+	<div class="container jumbotron2">
 		<h1 class="display-4">About us!</h1>
-		<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-			featured content or information.</p>
+		
 		<hr class="my-4">
 		<p>It uses utility classes for typography and spacing to space content out within the larger container.
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+			aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+			Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+			sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		</p>
-		
-	</div>
 
-	<div class="card-deck">
-			<div class="card">
-			 
-			  <div class="card-body"> 
-					<div class="card-header">
-							Featured
-						  </div>
-				
-				<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			  </div>
-			</div>
-			<div class="card">
+	</div>
+	<div class="top"></div>
+	<div class="color-it">
+	<div class="container text-center text-heading"><h1 class="display-4">What people say about us</h1></div></div>
+	<div class="row">
+	<div class="card-deck text-center">
 			
-			  <div class="card-body">
+		<div class="card ml-5">
+
+			<div class="card-body">
+				<div class="card-header">
+					Featured
+				</div>
+
+				<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.
+					This content is a little bit longer.</p>
+				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+			</div>
+		</div>
+		<div class="card">
+
+				<div class="card-body">
 					<div class="card-header">
-							Featured
-						  </div>
+						Featured
+					</div>
+	
+					<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.
+						This content is a little bit longer.</p>
+					<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+				</div>
+			</div>
+		<div class="card">
+
+			<div class="card-body">
+				<div class="card-header">
+					Featured
+				</div>
 				<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
 				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			  </div>
 			</div>
-			<div class="card">
-			 
-			  <div class="card-body">
-					<div class="card-header">
-							Featured
-						  </div>
-				<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			  </div>
+		</div>
+		
+	</div>
+	</div>
+	<div class="container">
+		<div class="heading text-center mt-5"><h1 class="display-4">Share Feedback</h1><hr></div>
+		<div class="content-wrap">
+			<div class="card mb-5">
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="form-group">
+								<label>Email</label>
+								<input type="text" class="form-control">
+							</div>
+						<div class="form-group">
+								<label>Message</label>
+								<textarea rows="5" class="form-control"></textarea>
+							</div>
+							<input type="submit" class="form-control">
+					</form>
+				</div>
 			</div>
-		  </div>
-
+		</div>
+	</div>
 	<!-- Footer -->
 	<footer id="footer">
 		<div class="inner">
@@ -202,8 +276,7 @@ background: linear-gradient(to right, #39424E, #39424E);
 				</section>
 			</div>
 			<div class="copyright">
-				&copy; Untitled. Photos <a href="https://unsplash.co">Unsplash</a>, Video <a
-					href="https://coverr.co">Coverr</a>.
+				&copy; Untitled. Photos <a href="https://unsplash.co">Unsplash</a>, Video <a href="https://coverr.co">Coverr</a>.
 			</div>
 		</div>
 	</footer>
