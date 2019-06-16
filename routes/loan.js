@@ -141,7 +141,7 @@ router.post('/:loanid/bid', (req, res) => {
                                 loan.status = 'accepted';
                                 User.findById(loan.recepient, (err, user) => {
                                     if (err) {
-                                        console.log(user);
+                                        console.log(err);
                                     } else {
                                         user.wallet += loan.amtReq;
                                         loan.collablender.forEach(lender=>{
@@ -248,7 +248,7 @@ var installMentTimer = setInterval(()=>{
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
-           console.log(loan.dateRemaining);
+         //  console.log(loan.dateRemaining);
            if ((30-loan.dateRemaining)%30>24)
             {
                 User.findById(loan.recepient,(err,recepient)=>{
@@ -270,7 +270,7 @@ var installMentTimer = setInterval(()=>{
         }
     })
 }
-            if(loan.dateRemaining%30===0 || loan.dateRemaining%30<0){
+            if(loan.dateRemaining%30===0 && loan.dateRemaining>=0){
                 
                 User.findById(loan.recepient,(err,recepient)=>{
                     recepient.wallet-=loan.emi;
@@ -308,6 +308,8 @@ var installMentTimer = setInterval(()=>{
                 });
 
               
+            }else if(loan.dateRemaining<0){
+                loan.status = 'paid';
             }
 
             loan.dateRemaining-=1;
