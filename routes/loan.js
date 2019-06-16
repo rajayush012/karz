@@ -242,7 +242,8 @@ var installMentTimer = setInterval(()=>{
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
-           if ((loan.dateRemaining)%30>24)
+           console.log(loan.dateRemaining);
+           if ((30-loan.dateRemaining)%30>24)
             {
                 User.findById(loan.recepient,(err,recepient)=>{
                 if (recepient.wallet<loan.emi)
@@ -253,7 +254,6 @@ var installMentTimer = setInterval(()=>{
                 subject: `LOAN DEFAULT`,
                 html: `Sir/Ma'am,<br> Your wallet balance is too low for further payments. Please, recharge your wallet immediately.<br><br>Regards,<br>Team Karz`
               };
-
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
