@@ -137,13 +137,23 @@ border-bottom: 1px solid black;
               </div>
               <div class="card-body text-center">
 
-                <p>Amount Requested : ₹ <%= loan.amtReq%></p>
-                <p>Amount Satisfied : ₹ <%= loan.amtSatisfied %></p>
-                <p>Number of days to be paid in: <%= loan.dateDue %></p>
-                <p>Days remaining : <%=loan.dateRemaining%></p>
-                <p>Status: <%=loan.status%></p>
-                <p>Days remaining for bidding: <%=loan.timeForBid %> </p>
-                <p><a class="btn btn-success" href="/loan/<%= loan.id %>/bid">Bid</a></p>
+                <p><b>Amount Requested</b> : ₹ <%= loan.amtReq%></p>
+                <p><b>Amount Satisfied till now</b> : ₹ <%= loan.amtSatisfied %></p>
+                <p><b>Number of days to be paid in</b> :<%= loan.dateDue %></p>
+                <p><b>Days remaining </b>: <%=loan.dateRemaining%></p>
+                <p><b>Status:</b> <%=loan.status%></p>
+                <p>
+                    <% if(loan.status==='pending'){ %>
+                      Days remaining for bidding: <%=loan.timeForBid %> </p>
+                    <% } %>
+                   
+                <p>
+                  <% if(loan.status==='pending'){ %>
+                    <a class="btn btn-success" href="/loan/<%= loan.id %>/bid">Bid</a></p>
+                  <% }else{ %>
+                    <a class="btn btn-success disabled" href="/loan/<%= loan.id %>/bid">Bid</a></p>
+                 <% } %>
+                
 
 
 

@@ -22,6 +22,7 @@ router.get('/showall', isLoggedIn, (req, res) => {
 
                 return (!loan.recepient.equals(req.user._id));
             })
+            filterLoans.reverse();
 
             User.findById(req.user._id,(err,user)=>{
                 if(err){
@@ -34,6 +35,8 @@ router.get('/showall', isLoggedIn, (req, res) => {
         }
     });
 });
+
+
 
 //---------------------
 
