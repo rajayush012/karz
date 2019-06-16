@@ -13,7 +13,12 @@ const userSchema =new mongoose.Schema({
     kyc:{type:mongoose.Schema.Types.ObjectId, ref: 'KYC'},
     profilePic:{type: String},
     kycstatus: {type:String, default:'not verified'},
-    notifications: [{type:String}]
+    notifications: [{type:String}],
+    gender:{type:String},
+    educationalQualiication:{type:String},
+    currentDesignation:{type:String},
+    organizations:[{type:String}],
+    dob: {type: Date}
 })
 userSchema.plugin(passportLocalMongoose);
 
