@@ -262,6 +262,9 @@
                                 <form action="/admin/verify/<%=verifye._id%>" method="POST"> 
                                     <input class="btn btn-block btn-danger" type="submit" value="Verify">
                                 </form>
+                                <form action="/admin/kyc/delete/<%=kyc._id%>/user/<%=verifye._id%>" method="POST">
+                                <input type="submit" class="btn btn-block btn-danger" value="Reject">
+                                </form>
                                 <a class="btn btn-dark" href="/admin/dashboard">Go back</a>
                             </div>
                         </div>
@@ -272,17 +275,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <nav class="footer-nav">
-                            <ul>
-                                <li>
-                                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
-                                </li>
-                                <li>
-                                    <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
-                                </li>
-                            </ul>
+                          
                         </nav>
                         <div class="credits ml-auto">
 

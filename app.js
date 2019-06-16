@@ -24,7 +24,7 @@ mongoose.connect("mongodb+srv://Alaap:alaap008@cluster0-dzslo.mongodb.net/test?r
 });
 
 
-
+mongoose.set('useFindAndModify', false);
 
 const port = 3000;
 const app = express();

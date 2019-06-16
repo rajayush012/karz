@@ -93,7 +93,7 @@ border-bottom: 1px solid black;
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-                  <a class="dropdown-item" href="/user/profile">Signed in as <%= user.username%></a>
+                  <a class="dropdown-item" href="/user/profile/<%user._id%>">Signed in as <%= user.username%></a>
                   <a class="dropdown-item" href="/user/logout">Logout</a>
                 </div>
               </li>
@@ -135,7 +135,7 @@ border-bottom: 1px solid black;
                
               </div>
               <div class="card-body text-center">
-                <p><a href="#"><b>Recepient</b>: <%=recepient.name%></a></p>
+                <p><a href="/user/recepient/<%=recepient._id%>"><b>Recepient</b>: <%=recepient.name%></a></p>
                 <p><b>Amount Requested</b> : ₹ <%= loan.amtReq%></p>
                 <p><b>Amount Satisfied till now</b> : ₹ <%= loan.amtSatisfied %></p>
                 <p><b>Number of days to be paid in</b> :<%= loan.dateDue %></p>

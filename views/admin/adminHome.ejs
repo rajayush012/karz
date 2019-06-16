@@ -81,7 +81,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
+                    <span class="d-lg-none d-md-block">Account</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -127,7 +127,7 @@
                         <% users.forEach(user=>{ %>
                       <tr>
                         <td><%=user.name%></td>
-                        <td> <% if(user.kyc){%> Uploaded <%}else{%> Not uploaded <% } %></td>
+                        <td> <% if(user.kyc!=null){%> Uploaded <%}else{%> Not uploaded <% } %></td>
                         <td><%=user.kycstatus%></td>
                         <td>
                           <% if(user.kyc) {%> <a class="btn btn-danger" href="/admin/verify/<%=user._id%>">Verify KYC</td> <% }else {%>  <a class="btn disabled btn-danger" href="/admin/verify/<%=user._id%>">Verify KYC</td> <%} %>

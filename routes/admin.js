@@ -50,6 +50,17 @@ router.get('/dashboard',isAdminAndLoggedIn,(req,res)=>{
     
 })
 
+router.post('/kyc/delete/:kycid/user/:userid',isAdminAndLoggedIn,(req,res)=>{
+    Kyc.findById(req.params.kycid,(err,kyc)=>{
+        User.findById(req.params.userid,(err,user)=>{
+            user.kyc = null;
+            user.save();
+            res.redirect('/admin/dashboard');
+
+        })
+    })
+})
+
 router.get('/verify/:userid',isAdminAndLoggedIn,(req,res)=>{
     User.findById(req.user._id,(err,user)=>{
         User.findById(req.params.userid,(err,veri)=>{

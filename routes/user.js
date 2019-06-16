@@ -143,7 +143,7 @@ router.post('/kyc',isLoggedIn,uploadtest.fields([
             if(err){
                 console.log(err);
             }
-            console.log(kyc);
+           // console.log(kyc);
             fs.remove(req.files.adhaarImage[0].path,(err)=>{
                 fs.remove(req.files.panImage[0].path,(err2)=>{
                     fs.remove(req.files.salarySlip[0].path,(err3)=>{
@@ -162,6 +162,7 @@ router.post('/kyc',isLoggedIn,uploadtest.fields([
 
     
 });
+
 
 
 router.get('/dashboard',isLoggedIn,(req,res)=>{
