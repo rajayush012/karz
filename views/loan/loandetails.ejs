@@ -147,12 +147,14 @@ border-bottom: 1px solid black;
                     <% } %>
                    
                 <p>
+                    <% if(!user._id.equals(recepient._id)){ %>
                   <% if(loan.status==='pending'){ %>
+                   
                     <a class="btn btn-success" href="/loan/<%= loan.id %>/bid">Bid</a></p>
                   <% }else{ %>
                     <a class="btn btn-success disabled" href="/loan/<%= loan.id %>/bid">Bid</a><a class="ml-3 btn btn-dark" href="/loan/showall">Go back</a></p>
                  <% } %>
-                
+                <% } %>
 
 
 

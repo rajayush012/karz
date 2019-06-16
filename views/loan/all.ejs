@@ -140,11 +140,12 @@ border-bottom: 1px solid black;
                 <p><b>Amount Requested</b> : ₹ <%= loan.amtReq%></p>
                 <p><b>Amount Satisfied till now</b> : ₹ <%= loan.amtSatisfied %></p>
                 <p><b>Number of days to be paid in</b> :<%= loan.dateDue %></p>
-                <p><b>Days remaining </b>: <%=loan.dateRemaining%></p>
+                
+                <p><b>Days remaining </b>:<span class="dateRem" id="<%=loan._id%>"><%=loan.dateRemaining%></span> </p>
                 <p><b>Status:</b> <%=loan.status%></p>
                 <p>
                     <% if(loan.status==='pending'){ %>
-                      Days remaining for bidding: <%=loan.timeForBid %> </p>
+                      Days remaining for bidding: <span class="bidDate" ><%=loan.timeForBid %></span> </p>
                     <% } %>
                    
                 <p>
@@ -209,11 +210,37 @@ border-bottom: 1px solid black;
   <script src="/dashboard/assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="/dashboard/assets/demo/demo.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  
+  <script>
+    
+
+     
+    </script>
+
   <script>
     $(document).ready(function () {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-      demo.initChartsPages();
+     
+      var x = setInterval(()=>{
+      for(let i = 0;i<document.getElementsByClassName('dateRem').length;i++){
+        var id = document.getElementsByClassName('dateRem')[i].id;
+       // console.log(id);
+        setValues(id);
+        
+      }
+      
+    },5000);
     });
+
+
+    function setValues(id){
+      axios.get(`/loan/daterem/${id}`)
+        .then(response=>{
+        
+          document.getElementById(id).innerText = response.data;
+        })
+    }
   </script>
 </body>
 

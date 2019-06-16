@@ -47,6 +47,12 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('loan/newloan');
 });
 
+router.get('/daterem/:loanid',(req,res)=>{
+    Loan.findById(req.params.loanid,(err,loan)=>{
+        res.json(loan.dateRemaining);
+    });
+});
+
 router.post("/new", isLoggedIn, (req, res) => {
     Loan.create({
         recepient: req.user._id,
@@ -159,7 +165,7 @@ router.post('/:loanid/bid', (req, res) => {
                             user.wallet = parseInt(user.wallet) - parseInt(req.body.amount);
                             loan.save();
                             user.save();
-                            res.render('loan/bidsuccess',{user:user});
+                            res.redirect(`loan/${loan._id}`);
                         }
                         else {
                             res.redirect('/loan/showall');
@@ -173,7 +179,7 @@ router.post('/:loanid/bid', (req, res) => {
 
             }
             else {
-                res.redirect('/loan/', req.params.loanid);
+                res.redirect('/loan/showall');
             }
 
 
