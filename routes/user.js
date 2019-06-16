@@ -217,9 +217,12 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
 })
 
-router.get('/profile/:id',(req,res)=>{
+router.get('/profile/:id',isLoggedIn,(req,res)=>{
 User.findById(req.params.id,(err,user)=>{
-    res.render('user/dashboard/user',{user:user});
+    User.findById(req.user._id,(err,loguser)=>{
+        res.render('user/dashboard/user',{user:user,luser:loguser});
+    })
+   
 });
     
 })
