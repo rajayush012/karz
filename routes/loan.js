@@ -35,7 +35,10 @@ router.get('/showall', isLoggedIn, (req, res) => {
 //new loan routes ------------------
 
 router.get('/new', isLoggedIn, (req, res) => {
-    res.render('loan/newloan');
+   User.findById(req.user._id, (err, user)=>{
+    res.render('loan/newloan',{user:user});
+   })
+    
 });
 
 router.post("/new", isLoggedIn, (req, res) => {
