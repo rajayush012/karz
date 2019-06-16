@@ -86,8 +86,18 @@ router.post('/new',uploadtest.single('file'),(req,res)=>{
     }else{
         var newImg = fs.readFileSync(req.file.path);
         var encImg = newImg.toString('base64');
-       
-    var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email,profilePic: encImg});
+        var orgs = req.body.orgs.split(',');
+    var newUser = new User({
+        username: req.body.username,
+        name: req.body.name, 
+        email: req.body.email,
+        profilePic: encImg,
+        dob: req.body.dob,
+        currentDesignation: req.body.curdesig,
+        educationalQualiication: req.body.edu,
+        organizations: orgs,
+        gender: req.body.gender   
+    });
     User.register(newUser,req.body.password, (err,user)=>{
         if(err){
             console.log(err);
@@ -207,8 +217,11 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
 })
 
-router.get('/profile',(req,res)=>{
-    res.render('user/dashboard/user');
+router.get('/profile/:id',(req,res)=>{
+User.findById(req.params.id,(err,user)=>{
+    res.render('user/dashboard/user',{user:user});
+});
+    
 })
 
 function isLoggedIn(req,res,next){
