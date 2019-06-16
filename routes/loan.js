@@ -43,6 +43,7 @@ router.get('/showall', isLoggedIn, (req, res) => {
 //new loan routes ------------------
 
 router.get('/new', isLoggedIn, (req, res) => {
+   
     res.render('loan/newloan');
 });
 
@@ -82,7 +83,13 @@ router.post("/new", isLoggedIn, (req, res) => {
 
 router.get('/:loanid', isLoggedIn, (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
-        res.render('loan/loandetails', { loan: loan });
+        User.findById(req.user._id,(err,user)=>{
+            User.findById(loan.recepient,(err,recepient)=>{
+                res.render('loan/loandetails', { loan: loan,user:user ,recepient:recepient});
+            })
+
+        })
+       
     })
 })
 
@@ -152,7 +159,7 @@ router.post('/:loanid/bid', (req, res) => {
                             user.wallet = parseInt(user.wallet) - parseInt(req.body.amount);
                             loan.save();
                             user.save();
-                            res.render('loan/bidsuccess');
+                            res.render('loan/bidsuccess',{user:user});
                         }
                         else {
                             res.redirect('/loan/showall');
@@ -230,14 +237,12 @@ var transporter = nodemailer.createTransport({
 
                   
 
-//var installMentTimer = setInterval(()=>{
+var installMentTimer = setInterval(()=>{
 
     Loan.find({status:'accepted'},(err,loans)=>{
-        loans.forEach (loan=>{
-            var installMentTimer = setInterval(()=>
-            {
+        loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
-                if ((loan.dateRemaining)%30>24)
+           if ((loan.dateRemaining)%30>24)
             {
                 User.findById(loan.recepient,(err,recepient)=>{
                 if (recepient.wallet<loan.emi)
@@ -301,22 +306,13 @@ var transporter = nodemailer.createTransport({
 
             loan.dateRemaining-=1;
             loan.save();
-        },dayDuration);
         })
     })
+
+
+},dayDuration);
 
 
 
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
