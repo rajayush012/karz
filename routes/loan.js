@@ -47,6 +47,12 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('loan/newloan');
 });
 
+router.get('/daterem/:loanid',(req,res)=>{
+    Loan.findById(req.params.loanid,(err,loan)=>{
+        res.json(loan.dateRemaining);
+    });
+});
+
 router.post("/new", isLoggedIn, (req, res) => {
     Loan.create({
         recepient: req.user._id,
@@ -135,7 +141,7 @@ router.post('/:loanid/bid', (req, res) => {
                                 loan.status = 'accepted';
                                 User.findById(loan.recepient, (err, user) => {
                                     if (err) {
-                                        console.log(user);
+                                        console.log(err);
                                     } else {
                                         user.wallet += loan.amtReq;
                                         loan.collablender.forEach(lender=>{
@@ -159,7 +165,7 @@ router.post('/:loanid/bid', (req, res) => {
                             user.wallet = parseInt(user.wallet) - parseInt(req.body.amount);
                             loan.save();
                             user.save();
-                            res.render('loan/bidsuccess',{user:user});
+                            res.redirect(`loan/${loan._id}`);
                         }
                         else {
                             res.redirect('/loan/showall');
@@ -173,7 +179,7 @@ router.post('/:loanid/bid', (req, res) => {
 
             }
             else {
-                res.redirect('/loan/', req.params.loanid);
+                res.redirect('/loan/showall');
             }
 
 
@@ -242,7 +248,7 @@ var installMentTimer = setInterval(()=>{
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
-           console.log(loan.dateRemaining);
+         //  console.log(loan.dateRemaining);
            if ((30-loan.dateRemaining)%30>24)
             {
                 User.findById(loan.recepient,(err,recepient)=>{
@@ -264,7 +270,7 @@ var installMentTimer = setInterval(()=>{
         }
     })
 }
-            if(loan.dateRemaining%30===0 || loan.dateRemaining%30<0){
+            if(loan.dateRemaining%30===0 && loan.dateRemaining>=0){
                 
                 User.findById(loan.recepient,(err,recepient)=>{
                     recepient.wallet-=loan.emi;
@@ -302,6 +308,8 @@ var installMentTimer = setInterval(()=>{
                 });
 
               
+            }else if(loan.dateRemaining<0){
+                loan.status = 'paid';
             }
 
             loan.dateRemaining-=1;
