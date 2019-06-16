@@ -7,20 +7,26 @@
     <title>Signup</title>
 
     <style>
+        	@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+            body{
+                font-family: 'Josefin Sans', sans-serif !important;
+            }
     
   .sign-up{
     text-align: center;
     padding: 30px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  
 }
 .submitbtn{
-    
+    font-size: 15px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
     margin-top: 0px;
-    width:100px;
-    height:30px;
+    width:300px;
+    height:50px;
+    padding: 10px;
     background-color:green;
     color:white;
+    transition: 0.3s;
     border-radius:10px;
 }
 
@@ -35,17 +41,17 @@
 }
 .form{
    
-    margin-left:20px;
+   
     width:400px;
   
 }
 .jumbotron-new{
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  
   color:black;
   }
 .btn:hover{
-    background-color: black !important;
+   
     box-shadow: 0 15px 15px 5px black;
     color:white;
 }
@@ -56,22 +62,30 @@
     width:500px;
     box-shadow: 0 10px 10px 5px lightgray;
     width:450px;  
-     margin:10px 450px ;
-     height:500px;
+     margin:10px auto ;
+    
      border-radius: 10px;
       }
-
+.form-control{
+    text-align: center;
+}
 </style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
      <!--sign up form-->
-
+     <% if(message){ %>
+        <div class="alert alert-danger text-center" role="alert">
+               <%=message%>
+              </div>
+     <% } %>
+     
      <div class="card">
             <div class="card-body">
                     <div id="sup"class="jumbotron-new">
-                            <form action="/user/new" method="POST">
+                            <form action="/user/new" method="POST" enctype="multipart/form-data">
                                 <div class="form">
-                                   <h1 class="sign-up">Sign up</h1>
+                                   <h1 class="sign-up">Sign up</h1><hr>
                                     <div class="form-group1">
                                         <div class="form-group">
                                             <label>Full Name</label>
@@ -90,14 +104,15 @@
                                             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                                         </div>
                                         <div class="form-group">
-                                            <label>Confirm Password</label>
-                                            <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password">
-                                            <p id="message"></p>
+                                                <label>Profile pic</label>
+                                                <input class="form-control" type="file" name="file" accept="image/*">
                                         </div>
-                                        <button type="submit" class="btn btn-dark submitbtn">Sign up</button>
+                                        <button type="submit" class="btn btn-success submitbtn">Sign up</button>
+                                        
                          </div>
                       </div>
        </form>
+       <a class="btn btn-dark btn-large my-4" href="/">Go back</a>
     </div>
     </div>
     </div>
