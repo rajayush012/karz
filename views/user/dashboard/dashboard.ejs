@@ -307,9 +307,9 @@ background: linear-gradient(to right, #39424E, #39424E);
               
                 <ul>
                   <% pendingLoans.forEach(ploan => { %>
-                    <li> 
-                      <%= ploan._id %> - Amount - Rs. <%= ploan.amtReq  %>
-                    </li>
+                   <p>
+                     <a href="/loan/<%=ploan._id%>"><%= ploan._id %> - Amount - Rs. <%= ploan.amtReq  %></a> 
+                   </p>
                   <% }) %>
 
                 </ul>
@@ -334,9 +334,9 @@ background: linear-gradient(to right, #39424E, #39424E);
               
                 <ul>
                     <% acceptedLoans.forEach(aloan => { %>
-                      <li> 
-                        <%= aloan._id %> - Amount - Rs. <%= aloan.amtReq  %>
-                      </li>
+                      <p>
+                          <a href="/loan/<%=aloan._id%>"><%= aloan._id %> - Amount - Rs. <%= aloan.amtReq  %></a> 
+                        </p>
                     <% }) %>
                 </ul>
               </div>
@@ -358,9 +358,9 @@ background: linear-gradient(to right, #39424E, #39424E);
               
                 <ul>
                     <% collabLoans.forEach(cloan => { %>
-                      <li> 
-                        <%= cloan._id %> - Amount - Rs. <%= cloan.amtReq  %>
-                      </li>
+                      <p>
+                         LoanID <a href="/loan/<%=cloan._id%>"><%= cloan._id %></a> - Amount - Rs. <%= cloan.amtReq  %>
+                        </p>
                     <% }) %>
                 </ul>
               </div>

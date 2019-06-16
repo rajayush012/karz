@@ -22,6 +22,7 @@ router.get('/showall', isLoggedIn, (req, res) => {
 
                 return (!loan.recepient.equals(req.user._id));
             })
+            filterLoans.reverse();
 
             User.findById(req.user._id,(err,user)=>{
                 if(err){
@@ -35,11 +36,14 @@ router.get('/showall', isLoggedIn, (req, res) => {
     });
 });
 
+
+
 //---------------------
 
 //new loan routes ------------------
 
 router.get('/new', isLoggedIn, (req, res) => {
+   
     res.render('loan/newloan');
 });
 
@@ -79,7 +83,13 @@ router.post("/new", isLoggedIn, (req, res) => {
 
 router.get('/:loanid', isLoggedIn, (req, res) => {
     Loan.findById(req.params.loanid, (err, loan) => {
-        res.render('loan/loandetails', { loan: loan });
+        User.findById(req.user._id,(err,user)=>{
+            User.findById(loan.recepient,(err,recepient)=>{
+                res.render('loan/loandetails', { loan: loan,user:user ,recepient:recepient});
+            })
+
+        })
+       
     })
 })
 
@@ -149,7 +159,7 @@ router.post('/:loanid/bid', (req, res) => {
                             user.wallet = parseInt(user.wallet) - parseInt(req.body.amount);
                             loan.save();
                             user.save();
-                            res.render('loan/bidsuccess');
+                            res.render('loan/bidsuccess',{user:user});
                         }
                         else {
                             res.redirect('/loan/showall');
@@ -217,7 +227,6 @@ var interTimer = setInterval(() => {
 
    
 }, dayDuration);
-
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -233,11 +242,33 @@ var installMentTimer = setInterval(()=>{
     Loan.find({status:'accepted'},(err,loans)=>{
         loans.forEach(loan=>{
            // console.log(loan.dateRemaining);
+           if ((loan.dateRemaining)%30>24)
+            {
+                User.findById(loan.recepient,(err,recepient)=>{
+                if (recepient.wallet<loan.emi)
+                {
+                var mailOptions = {
+                from: 'alaapbanerjee08@gmail.com',
+                to: recepient.email,
+                subject: `LOAN DEFAULT`,
+                html: `Sir/Ma'am,<br> Your wallet balance is too low for further payments. Please, recharge your wallet immediately.<br><br>Regards,<br>Team Karz`
+              };
+
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent for low balance: ' + info.response);
+                }
+              });
+        }
+    })
+}
             if(loan.dateRemaining%30===0 || loan.dateRemaining%30<0){
                 
                 User.findById(loan.recepient,(err,recepient)=>{
                     recepient.wallet-=loan.emi;
-                    if(recepient.wallet>=0){
+                    if(recepient.wallet>0){
                         recepient.save();
                         loan.collablender.forEach(lender=>{
                             User.findById(lender._id, (err,lenderr)=>{
@@ -254,14 +285,14 @@ var installMentTimer = setInterval(()=>{
                                 from: 'alaapbanerjee08@gmail.com',
                                 to: recepient.email,
                                 subject: `LOAN DEFAULT`,
-                                html: `Sir/Ma'am,<br> Your wallet balance is too low for further payments. Please, recharge your wallet immediately.<br><br>Regards,<br>Team Karz`
+                                html: `Sir/Ma'am,<br> You have defaulted.<br><br>Regards,<br>Team Karz`
                               };
 
                               transporter.sendMail(mailOptions, function(error, info){
                                 if (error) {
                                   console.log(error);
                                 } else {
-                                  console.log('Email sent: ' + info.response);
+                                  console.log('Email sent for loan default: ' + info.response);
                                 }
                               });
 
@@ -285,3 +316,14 @@ var installMentTimer = setInterval(()=>{
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
