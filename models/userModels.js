@@ -12,7 +12,8 @@ const userSchema =new mongoose.Schema({
     isAdmin: {type: String, default: 'no'},
     kyc:{type:mongoose.Schema.Types.ObjectId, ref: 'KYC'},
     profilePic:{type: String},
-    kycstatus: {type:String, default:'not verified'}
+    kycstatus: {type:String, default:'not verified'},
+    notifications: [{type:String}]
 })
 userSchema.plugin(passportLocalMongoose);
 
