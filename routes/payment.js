@@ -34,7 +34,7 @@ router.post("/charge",isLoggedIn, (req, res) => {
         User.findById(req.user._id,(err,user)=>{
             user.wallet+=charge.amount;
             user.save();
-            res.render('payments/success',{charge});
+            res.redirect('/user/dashboard');
         });
 
        
