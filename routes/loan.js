@@ -230,12 +230,14 @@ var transporter = nodemailer.createTransport({
 
                   
 
-var installMentTimer = setInterval(()=>{
+//var installMentTimer = setInterval(()=>{
 
     Loan.find({status:'accepted'},(err,loans)=>{
-        loans.forEach(loan=>{
+        loans.forEach (loan=>{
+            var installMentTimer = setInterval(()=>
+            {
            // console.log(loan.dateRemaining);
-           if ((loan.dateRemaining)%30>24)
+                if ((loan.dateRemaining)%30>24)
             {
                 User.findById(loan.recepient,(err,recepient)=>{
                 if (recepient.wallet<loan.emi)
@@ -299,11 +301,9 @@ var installMentTimer = setInterval(()=>{
 
             loan.dateRemaining-=1;
             loan.save();
+        },dayDuration);
         })
     })
-
-
-},dayDuration);
 
 
 
